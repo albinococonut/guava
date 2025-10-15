@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guava - Turn Any Service Advisor Into a Top Closer</title>
+    <meta name="description" content="AI-powered sales scripts for Tekmetric that turn inexperienced service advisors into top closers instantly—no training required.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --coral: #F77F87;
+            --yellow: #FFD93D;
+            --green: #4CB963;
+            --bg: #fafafa;
+            --text: #0a0a0a;
+            --text-light: #737373;
+            --text-gray: #6b7280;
+            --border: #e5e5e5;
+            --gradient: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: var(--text);
+        }
+        
+        h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+        }
+        
+        h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: clamp(20px, 3vw, 28px);
+            margin-bottom: 16px;
+        }
+        
+        p {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Section Spacing */
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section:nth-child(even) {
+            background: white;
+        }
+        
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-cta {
+            padding: 10px 24px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 217, 61, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            margin-bottom: 24px;
+        }
+        
+        .hero-subheadline {
+            font-size: 20px;
+            color: var(--text-light);
+            margin-bottom: 48px;
+            font-weight: 500;
+        }
+        
+        .video-container {
+            margin: 48px auto;
+            max-width: 800px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            background: #000;
+            aspect-ratio: 16 / 9;
+        }
+        
+        .video-container iframe,
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 48px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(247, 127, 135, 0.4);
+        }
+        
+        .cta-button:hover::before {
+            opacity: 1;
+        }
+        
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .cta-subtext {
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        
+        /* Problem List */
+        .problem-list {
+            list-style: none;
+            margin: 32px 0;
+        }
+        
+        .problem-list li {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+        
+        .problem-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .problem-list strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        /* Stats Box */
+        .stats-box {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .stats-box p {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .stats-box strong {
+            color: var(--coral);
+            font-weight: 700;
+        }
+        
+        /* Comparison Table */
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 24px;
+            transition: all 0.3s;
+        }
+        
+        .comparison-card.featured {
+            border-color: var(--green);
+            border-width: 3px;
+            box-shadow: 0 8px 24px rgba(76, 185, 99, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comparison-card.featured:hover {
+            transform: scale(1.05) translateY(-4px);
+        }
+        
+        .comparison-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        
+        .comparison-card.featured h3 {
+            color: var(--green);
+        }
+        
+        .comparison-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .comparison-card li {
+            padding: 8px 0;
+            font-size: 15px;
+            color: var(--text-light);
+        }
+        
+        .comparison-card li::before {
+            content: "• ";
+            color: var(--coral);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 48px 0;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 24px;
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
+        }
+        
+        .step h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .step p {
+            font-size: 16px;
+            color: var(--text-light);
+        }
+        
+        /* Feature Boxes */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        
+        .feature-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-box h3 {
+            font-size: 22px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .feature-box p {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .feature-box ul {
+            list-style: none;
+        }
+        
+        .feature-box li {
+            padding: 8px 0;
+            font-size: 15px;
+            color: var(--text-light);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .feature-box li::before {
+            content: "→";
+            color: var(--green);
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        /* Economics Section */
+        .economics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+        
+        .economics-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        
+        .economics-card.winner {
+            border-color: var(--green);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.05) 0%, rgba(76, 185, 99, 0.02) 100%);
+        }
+        
+        .economics-card h3 {
+            font-size: 22px;
+            margin-bottom: 24px;
+        }
+        
+        .economics-card ul {
+            list-style: none;
+        }
+        
+        .economics-card li {
+            padding: 10px 0;
+            font-size: 16px;
+            color: var(--text-light);
+        }
+        
+        .economics-result {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid var(--border);
+            font-size: 17px;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        /* Josh Story */
+        .story {
+            background: white;
+            border-left: 4px solid var(--coral);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+        
+        .story h4 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .story-section {
+            margin: 24px 0;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+        
+        .story-section h5 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .story p {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        
+        .story .highlight {
+            background: rgba(76, 185, 99, 0.1);
+            border-left: 3px solid var(--green);
+        }
+        
+        /* FAQ */
+        .faq {
+            max-width: 800px;
+            margin: 48px auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            user-select: none;
+        }
+        
+        .faq-question:hover {
+            color: var(--coral);
+        }
+        
+        .faq-icon {
+            font-size: 24px;
+            color: var(--coral);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-answer-content {
+            padding: 0 24px 24px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+        
+        /* Guarantee */
+        .guarantee {
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.1) 0%, rgba(76, 185, 99, 0.05) 100%);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 48px;
+            margin: 48px 0;
+            text-align: center;
+        }
+        
+        .guarantee h3 {
+            color: var(--green);
+            margin-bottom: 24px;
+        }
+        
+        .guarantee ol {
+            text-align: left;
+            max-width: 600px;
+            margin: 32px auto;
+            padding-left: 0;
+            list-style-position: inside;
+        }
+        
+        .guarantee li {
+            padding: 12px 0;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+        
+        /* Final CTA Section */
+        .final-cta {
+            text-align: center;
+            padding: 120px 0;
+            background: white;
+        }
+        
+        .final-cta h2 {
+            margin-bottom: 32px;
+        }
+        
+        .final-cta-list {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: left;
+        }
+        
+        .final-cta-list p {
+            font-size: 18px;
+            padding: 12px 0;
+        }
+        
+        .emphasis {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 40px 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 48px 0 32px;
+            text-align: center;
+        }
+        
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+        
+        footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero {
+                padding: 80px 0 60px;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+            
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-card.featured {
+                transform: none;
+            }
+            
+            .comparison-card.featured:hover {
+                transform: translateY(-4px);
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .economics {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-button {
+                width: 100%;
+                padding: 16px 32px;
+            }
+            
+            .guarantee {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Guava</div>
+                <a href="#cta" class="header-cta">Start Free Trial</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Turn Any Service Advisor Into a Top Closer—Without 18 Months of Training</h1>
+                <p class="hero-subheadline">Your D- advisor becomes a B+ closer the moment they click the button. No courses. No role-playing. No memorization. Just results.</p>
+                
+                <!-- VIDEO PLACEHOLDER - Replace with your video embed -->
+                <div class="video-container">
+                    <!-- REPLACE THIS COMMENT WITH YOUR VIDEO EMBED CODE -->
+                    <!-- Example: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+                    <!-- Or: <video controls><source src="your-video.mp4" type="video/mp4"></video> -->
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #1a1a1a; color: #888; font-size: 14px;">
+                        [Video Embed Goes Here]
+                    </div>
+                </div>
+                
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button" id="cta">Start Your 14-Day Free Trial</a>
+                <p class="cta-subtext">14-day free trial • Cancel anytime • No setup fees • Works with Tekmetric</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Training Problem -->
+    <section>
+        <div class="container-narrow">
+            <h2>You Hire a Sharp New Service Advisor. Great Attitude. Good With Customers. Knows Cars. Now Teach Them How to SELL.</h2>
+            
+            <h3 style="margin-top: 40px;">Here's What That Actually Looks Like:</h3>
+            
+            <ul class="problem-list">
+                <li><strong>Month 1: Shadow senior advisors</strong><br>
+                • They watch, they nod, they take notes<br>
+                • They're terrified to talk money<br>
+                • Close rate: 15%</li>
+                
+                <li><strong>Month 2-3: Sales training course ($2,500)</strong><br>
+                • Two days in a hotel conference room<br>
+                • Role-playing exercises they hate<br>
+                • "Build rapport, identify needs, present solutions..."<br>
+                • They forget 90% by Wednesday</li>
+                
+                <li><strong>Month 4-6: Real-world practice</strong><br>
+                • Some estimates they nail, most they fumble<br>
+                • Customer says "that's expensive" — they freeze<br>
+                • They discount without asking you first<br>
+                • Close rate: 25%</li>
+                
+                <li><strong>Month 7-12: Getting better (maybe)</strong><br>
+                • If they stick around (50% quit by now)<br>
+                • If they apply what they learned (most don't)<br>
+                • If they don't develop bad habits (they do)<br>
+                • Close rate: 35% on a good day</li>
+            </ul>
+            
+            <div class="stats-box">
+                <p><strong>Total investment:</strong> $15,000+ in training, lost sales, and your time<br>
+                <strong>Time to competency:</strong> 12-18 months<br>
+                <strong>Result:</strong> They're still a C+ advisor at best</p>
+            </div>
+            
+            <p>Most advisors never get past 40% close rates—even after years in the industry. Because sales is HARD. Objection handling is HARD. Remembering what to say under pressure is HARD.</p>
+        </div>
+    </section>
+
+    <!-- What If You Could Skip All That -->
+    <section>
+        <div class="container-narrow">
+            <h2>Here's What Happens When You Give That Same D- Advisor Guava:</h2>
+            
+            <div class="story">
+                <h4>Day 1, First Estimate:</h4>
+                <p>• Customer: "My check engine light is on"<br>
+                • Advisor clicks Guava<br>
+                • <strong>Seconds later: Complete script appears</strong><br>
+                • Opening: "Hi John, thanks for bringing in your F-150..."<br>
+                • Body: Prioritizes the O2 sensor, explains why it matters<br>
+                • Close: Offers warranty, mentions financing<br>
+                • Advisor reads it. Customer approves. $847 sale.</p>
+                
+                <div style="text-align: center; margin: 24px 0;">
+                    <p style="font-size: 24px; font-weight: 700; color: var(--green);">Close rate: 65%</p>
+                </div>
+            </div>
+            
+            <p><strong>No training. No practice. No memorization.</strong></p>
+            
+            <p>They went from "I have no idea what to say" to closing the sale in seconds.</p>
+            
+            <p>Because Guava doesn't teach them sales theory. It gives them the <strong>EXACT WORDS to say.</strong> For THAT customer. For THAT car. For THAT repair. Right now. Every time.</p>
+            
+            <div style="text-align: center; margin: 48px 0;">
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 48px;">D- Advisor vs. B+ Advisor vs. Guava</h2>
+            
+            <div class="comparison">
+                <div class="comparison-card">
+                    <h3>D- Advisor<br>(New Hire, No Training)</h3>
+                    <ul>
+                        <li>Close rate: 15-25%</li>
+                        <li>Fumbles objections</li>
+                        <li>Forgets to mention warranty</li>
+                        <li>Discounts to make the sale</li>
+                        <li>Customers feel pressured</li>
+                        <li><strong>Annual revenue per advisor: $180,000</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card">
+                    <h3>B+ Advisor<br>(2+ Years Experience + Training)</h3>
+                    <ul>
+                        <li>Close rate: 50-60%</li>
+                        <li>Handles most objections</li>
+                        <li>Confident presentation</li>
+                        <li>Mentions value-adds</li>
+                        <li>Customers trust them</li>
+                        <li><strong>Annual revenue per advisor: $420,000</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card featured">
+                    <h3>D- Advisor<br>WITH Guava</h3>
+                    <ul>
+                        <li>Close rate: 55-70%</li>
+                        <li>Handles ALL objections (Guava tells them what to say)</li>
+                        <li>Confident because they have a script</li>
+                        <li>Never forgets warranty, financing, or urgency</li>
+                        <li>Customers feel educated, not sold</li>
+                        <li><strong>Annual revenue per advisor: $450,000+</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-size: 18px; margin-top: 40px; color: var(--text);">Your brand-new advisor—the one who was sweating bullets yesterday—is now performing at the same level as your best advisor with 5+ years of experience. Not in 12 months. Not in 6 months. <strong>TODAY.</strong></p>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center;">It's Stupid Simple (That's Why It Actually Gets Used)</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Open Estimate</h3>
+                    <p>Your advisor opens ANY estimate in Tekmetric</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Click Button</h3>
+                    <p>Click the Guava button (right there in Tekmetric)</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Close Sale</h3>
+                    <p>Read the personalized script. Close the sale.</p>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-size: 18px; margin-top: 40px;">That's it. No switching apps. No typing. No training videos. It just works.</p>
+            
+            <div style="text-align: center; margin: 48px 0;">
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 3 Outcomes -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 48px;">What You Get</h2>
+            
+            <div class="features">
+                <div class="feature-box">
+                    <h3>Stop Hiring Advisors Who Can't Close</h3>
+                    <p>Most service advisors tank when customers push back. Guava gives them word-for-word responses to every objection—so even your newest hire closes like a 10-year veteran.</p>
+                    <ul>
+                        <li>Your D- advisor closes at B+ level on their first day</li>
+                        <li>No more "let me ask my manager" moments</li>
+                        <li>No more lost sales because they froze under pressure</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Stop Watching $2,000 Repairs Walk Out the Door</h3>
+                    <p>When your advisor says "it's $2,847," and the customer says "that's steep"—what happens next decides if you make the sale. Guava tells them EXACTLY what to say next. Every time.</p>
+                    <ul>
+                        <li>Pre-written objection responses for price, timing, and trust</li>
+                        <li>Automatic mention of warranty and financing at the right moment</li>
+                        <li>Your profit stops walking out the door</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>Stop Spending 18 Months Training People Who Quit Anyway</h3>
+                    <p>You invest $15,000 and a year of your time training someone to close. Then they leave. Or plateau. Or never get good at it. Guava makes training irrelevant. Click button. Read script. Close sale.</p>
+                    <ul>
+                        <li>Zero training time required</li>
+                        <li>Works for advisors with 0 days or 10 years of experience</li>
+                        <li>Consistent results from your entire team</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Economics -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 48px;">The Economics Are Insane</h2>
+            
+            <div class="economics">
+                <div class="economics-card">
+                    <h3>Traditional Path</h3>
+                    <ul>
+                        <li>Hire new advisor at $45,000/year</li>
+                        <li>Invest $15,000 in training over 12 months</li>
+                        <li>Wait 12-18 months for them to become competent</li>
+                        <li>Hope they don't quit (50% do)</li>
+                        <li>Hope they actually apply the training (most don't)</li>
+                    </ul>
+                    <div class="economics-result">
+                        <strong>Total cost:</strong> $60,000<br>
+                        <strong>Result:</strong> Maybe a C+ advisor after 18 months
+                    </div>
+                </div>
+                
+                <div class="economics-card winner">
+                    <h3>Guava Path</h3>
+                    <ul>
+                        <li>Hire new advisor at $45,000/year</li>
+                        <li>Hand them Guava on Day 1</li>
+                        <li>They're closing at B+ level by Day 2</li>
+                        <li>Total cost: $45,000 + $197/month = $47,364</li>
+                    </ul>
+                    <div class="economics-result" style="color: var(--green);">
+                        <strong>Total cost:</strong> $47,364<br>
+                        <strong>Result:</strong> B+ advisor immediately
+                    </div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-size: 20px; margin-top: 40px; font-weight: 600; color: var(--text);">You just saved $13,000 and 18 months of frustration.</p>
+            
+            <div style="text-align: center; margin: 48px 0;">
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Josh Story -->
+    <section>
+        <div class="container-narrow">
+            <h2>Meet "Josh"</h2>
+            
+            <p>Josh was hired 3 weeks ago. Came from Jiffy Lube. Great with customers, zero sales experience.</p>
+            
+            <div class="story-section">
+                <h5>His first solo estimate WITHOUT Guava:</h5>
+                <p><strong>Customer:</strong> "How much for the brake job?"<br>
+                <strong>Josh:</strong> "Uh, let me check... $680."<br>
+                <strong>Customer:</strong> "That's steep. Can you do it for $500?"<br>
+                <strong>Josh:</strong> "Let me ask my manager..."<br>
+                <strong>Manager:</strong> (thinking) "We just lost $180 in margin."</p>
+            </div>
+            
+            <div class="story-section highlight">
+                <h5>His first solo estimate WITH Guava:</h5>
+                <p><strong>Customer:</strong> "How much for the brake job?"<br>
+                <strong>Josh:</strong> [Clicks Guava, reads script]<br>
+                "So Sarah, the total for replacing both front brake pads, resurfacing the rotors, and doing a full brake system inspection comes to $680. Here's why this matters—your front pads are down to 2mm, which means metal-on-metal contact is about a week away. If we let that happen, you're looking at $1,200 in rotor replacement instead of the $680 to fix it right now. Plus, everything we do comes with our 5-year, 60,000-mile warranty, so you won't pay for this repair twice. Would you like us to get started today?"<br>
+                <strong>Customer:</strong> "That makes sense. Yeah, let's do it."</p>
+            </div>
+            
+            <p style="font-size: 18px; margin-top: 32px;"><strong>Same advisor. Same estimate. Different script.</strong></p>
+            
+            <p>$680 closed vs. $500 negotiated. That's a $180 difference on ONE job. Josh does 4-6 estimates per day. Over a month, Guava is adding $10,000+ to your bottom line from ONE advisor who has zero sales training.</p>
+            
+            <p style="font-size: 20px; font-weight: 600; color: var(--text); margin-top: 24px;">Now multiply that by your entire team.</p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 48px;">Frequently Asked Questions</h2>
+            
+            <div class="faq">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Does this work with Tekmetric only?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. We built Guava specifically for Tekmetric because it's the industry standard. If you're on a different system, email us at support@getguava.ai and we'll let you know when we add support.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do I need one license per advisor or per shop?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            One license covers your entire SHOP LOCATION. All advisors at that location can use it unlimited times per day. If you have multiple locations, you need one license per location.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does setup take?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            About 3 minutes. Install the Chrome extension, enter your license key, enter your shop name. Done. Your advisors can start using it immediately.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I cancel anytime?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. Cancel in Stripe with one click. No penalties, no fees, no hoops. If you cancel, your license deactivates at the end of your billing period.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What if the script doesn't make sense?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Hasn't happened yet, but if it does: your advisor can regenerate a new one with one click. The AI is trained on thousands of real automotive estimates and gets it right 99%+ of the time.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Will my advisors become dependent on it?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Great question. What actually happens: Weeks 1-2 they read it word-for-word. Weeks 3-4 they start improvising and adding personality. Month 2+ they use it strategically for complex estimates and tough objections. You're not creating dependency—you're creating consistency.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What if I have multiple Tekmetric accounts?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Each shop location gets its own license. So if you have "Bob's Auto - Downtown" and "Bob's Auto - West Side" as separate shops in Tekmetric, you need two licenses.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my data secure?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. We don't store customer data, VINs, or estimate details. Guava reads the page, generates the script, and that's it. Your data stays in Tekmetric.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section>
+        <div class="container">
+            <div class="guarantee">
+                <h3>Try Guava Free for 14 Days—Cancel Anytime</h3>
+                
+                <p style="font-size: 18px; margin-bottom: 32px;">Here's how it works:</p>
+                
+                <ol>
+                    <li>Sign up today. Your card won't be charged for 14 days.</li>
+                    <li>Use Guava on real estimates with real customers.</li>
+                    <li>After 14 days, you'll be charged $197/month.</li>
+                    <li>Don't like it? Cancel anytime in your Stripe dashboard. No phone calls. No retention offers. One click and you're done.</li>
+                </ol>
+                
+                <p style="font-size: 17px; margin-top: 32px;">We're not holding your money hostage. If it doesn't work for you, just cancel. But we're betting after your advisors close 5-10 extra sales in two weeks, you'll want to keep it.</p>
+                
+                <p style="font-size: 18px; font-weight: 600; color: var(--text); margin-top: 24px;">That's not a gamble. That's just math.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container-narrow">
+            <h2>Here's What Happens Next:</h2>
+            
+            <div class="final-cta-list">
+                <p>Click "Start Your 14-Day Trial" below.</p>
+                <p>Enter your shop name and payment info (we won't charge until day 15 if you keep it).</p>
+                <p>We'll email you your license key in 60 seconds.</p>
+                <p>Activate Guava in Tekmetric (takes 2 minutes).</p>
+                <p>Have your advisors test it on the next estimate.</p>
+                <p>Watch them close sales they would've lost yesterday.</p>
+            </div>
+            
+            <p style="font-size: 18px; margin: 40px 0;">That's it.</p>
+            
+            <p>Two weeks from now, you'll either be closing more sales and wondering why you didn't start sooner... or you'll have gotten a free test drive and cancelled.</p>
+            
+            <p class="emphasis">You literally cannot lose.</p>
+            
+            <p>The only way you lose is by doing nothing and watching another $50,000 in repairs walk out the door this month.</p>
+            
+            <div style="margin: 60px 0;">
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial - $197/Month</a>
+                <p class="cta-subtext">14-day free trial • Cancel anytime • No setup fees • Works with Tekmetric</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Guava</strong> | support@getguava.ai</p>
+            <p>© 2025 Guava. All rights reserved.</p>
+            <p style="margin-top: 16px;">Need Help? Email us at support@getguava.ai - We respond within 2 hours.</p>
+        </div>
+    </footer>
+
+    <!-- FAQ JavaScript -->
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = question.nextElementSibling;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = null;
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
