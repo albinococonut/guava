@@ -540,6 +540,88 @@
             border-left: 3px solid var(--green);
         }
         
+        /* Pricing Section */
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--green);
+            border-width: 3px;
+            box-shadow: 0 8px 24px rgba(76, 185, 99, 0.2);
+        }
+        
+        .pricing-card h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        
+        .pricing-price {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .pricing-period {
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+        
+        .pricing-save {
+            display: inline-block;
+            background: rgba(76, 185, 99, 0.1);
+            color: var(--green);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .pricing-features li {
+            padding: 8px 0;
+            font-size: 15px;
+            color: var(--text-light);
+        }
+        
+        .pricing-features li::before {
+            content: "✓ ";
+            color: var(--green);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
         /* FAQ */
         .faq {
             max-width: 800px;
@@ -614,20 +696,6 @@
         .guarantee h3 {
             color: var(--green);
             margin-bottom: 24px;
-        }
-        
-        .guarantee ol {
-            text-align: left;
-            max-width: 600px;
-            margin: 32px auto;
-            padding-left: 0;
-            list-style-position: inside;
-        }
-        
-        .guarantee li {
-            padding: 12px 0;
-            font-size: 17px;
-            line-height: 1.6;
         }
         
         /* Final CTA Section */
@@ -724,6 +792,10 @@
                 grid-template-columns: 1fr;
             }
             
+            .pricing {
+                grid-template-columns: 1fr;
+            }
+            
             .cta-button {
                 width: 100%;
                 padding: 16px 32px;
@@ -744,7 +816,7 @@
     <img src="icon48.png" alt="Guava" style="height: 32px; width: 32px; vertical-align: middle; margin-right: 8px;">
     <span>Guava</span>
 </div>
-                <a href="#cta" class="header-cta">Start Free Trial</a>
+                <a href="#cta" class="header-cta">Get Instant Access</a>
             </div>
         </div>
     </header>
@@ -753,8 +825,8 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Turn Any Service Advisor Into a Top Closer—Without 18 Months of Training</h1>
-                <p class="hero-subheadline">Your D- advisor becomes a B+ closer the moment they click the button. No courses. No role-playing. No memorization. Just results.</p>
+                <h1>Turn Any Service Advisor Into a Top Closer Overnight—Without 18 Months of Training</h1>
+                <p class="hero-subheadline">Your newest hire becomes a confident closer the moment they click the button. No courses. No role-playing. No memorization. Just results.</p>
                 
                 <!-- VIDEO PLACEHOLDER - Replace with your video embed -->
                 <div class="video-container">
@@ -766,8 +838,8 @@
                     </div>
                 </div>
                 
-                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button" id="cta">Start Your 14-Day Free Trial</a>
-                <p class="cta-subtext">14-day free trial • Cancel anytime • No setup fees • Works with Tekmetric</p>
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button" id="cta">Get Instant Access</a>
+                <p class="cta-subtext">7-day money-back guarantee • Cancel anytime • No setup fees • Works with Tekmetric</p>
             </div>
         </div>
     </section>
@@ -817,7 +889,7 @@
     <!-- What If You Could Skip All That -->
     <section>
         <div class="container-narrow">
-            <h2>Here's What Happens When You Give That Same D- Advisor Guava:</h2>
+            <h2>Here's What Happens When You Give That Same New Hire Guava:</h2>
             
             <div class="story">
                 <h4>Day 1, First Estimate:</h4>
@@ -841,7 +913,7 @@
             <p>Because Guava doesn't teach them sales theory. It gives them the <strong>EXACT WORDS to say.</strong> For THAT customer. For THAT car. For THAT repair. Right now. Every time.</p>
             
             <div style="text-align: center; margin: 48px 0;">
-                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Get Instant Access</a>
             </div>
         </div>
     </section>
@@ -849,11 +921,11 @@
     <!-- Comparison Table -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">D- Advisor vs. B+ Advisor vs. Guava</h2>
+            <h2 style="text-align: center; margin-bottom: 48px;">New Hire vs. Veteran vs. New Hire WITH Guava</h2>
             
             <div class="comparison">
                 <div class="comparison-card">
-                    <h3>D- Advisor<br>(New Hire, No Training)</h3>
+                    <h3>New Hire<br>(No Training)</h3>
                     <ul>
                         <li>Close rate: 15-25%</li>
                         <li>Fumbles objections</li>
@@ -865,7 +937,7 @@
                 </div>
                 
                 <div class="comparison-card">
-                    <h3>B+ Advisor<br>(2+ Years Experience + Training)</h3>
+                    <h3>Veteran Advisor<br>(2+ Years Experience + Training)</h3>
                     <ul>
                         <li>Close rate: 50-60%</li>
                         <li>Handles most objections</li>
@@ -877,7 +949,7 @@
                 </div>
                 
                 <div class="comparison-card featured">
-                    <h3>D- Advisor<br>WITH Guava</h3>
+                    <h3>New Hire<br>WITH Guava</h3>
                     <ul>
                         <li>Close rate: 55-70%</li>
                         <li>Handles ALL objections (Guava tells them what to say)</li>
@@ -921,7 +993,7 @@
             <p style="text-align: center; font-size: 18px; margin-top: 40px;">That's it. No switching apps. No typing. No training videos. It just works.</p>
             
             <div style="text-align: center; margin: 48px 0;">
-                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Get Instant Access</a>
             </div>
         </div>
     </section>
@@ -933,10 +1005,10 @@
             
             <div class="features">
                 <div class="feature-box">
-                    <h3>Stop Hiring Advisors Who Can't Close</h3>
+                    <h3>Stop Losing Sales When Customers Push Back</h3>
                     <p>Most service advisors tank when customers push back. Guava gives them word-for-word responses to every objection—so even your newest hire closes like a 10-year veteran.</p>
                     <ul>
-                        <li>Your D- advisor closes at B+ level on their first day</li>
+                        <li>Your new advisor closes at veteran level on their first day</li>
                         <li>No more "let me ask my manager" moments</li>
                         <li>No more lost sales because they froze under pressure</li>
                     </ul>
@@ -991,12 +1063,11 @@
                     <ul>
                         <li>Hire new advisor at $45,000/year</li>
                         <li>Hand them Guava on Day 1</li>
-                        <li>They're closing at B+ level by Day 2</li>
-                        <li>Total cost: $45,000 + $197/month = $47,364</li>
+                        <li>They're closing at veteran level by Day 2</li>
                     </ul>
                     <div class="economics-result" style="color: var(--green);">
-                        <strong>Total cost:</strong> $47,364<br>
-                        <strong>Result:</strong> B+ advisor immediately
+                        <strong>Total cost:</strong> $45,000 + $149/month = $46,788<br>
+                        <strong>Result:</strong> High-performing advisor immediately
                     </div>
                 </div>
             </div>
@@ -1004,7 +1075,7 @@
             <p style="text-align: center; font-size: 20px; margin-top: 40px; font-weight: 600; color: var(--text);">You just saved $13,000 and 18 months of frustration.</p>
             
             <div style="text-align: center; margin: 48px 0;">
-                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial</a>
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Get Instant Access</a>
             </div>
         </div>
     </section>
@@ -1150,20 +1221,52 @@
     <section>
         <div class="container">
             <div class="guarantee">
-                <h3>Try Guava Free for 14 Days—Cancel Anytime</h3>
+                <h3>Try Guava Risk-Free for 7 Days</h3>
                 
-                <p style="font-size: 18px; margin-bottom: 32px;">Here's how it works:</p>
+                <p style="font-size: 18px; margin-bottom: 32px; color: var(--text);">Here's the deal:</p>
                 
-                <ol>
-                    <li>Sign up today. Your card won't be charged for 14 days.</li>
-                    <li>Use Guava on real estimates with real customers.</li>
-                    <li>After 14 days, you'll be charged $197/month.</li>
-                    <li>Don't like it? Cancel anytime in your Stripe dashboard. No phone calls. No retention offers. One click and you're done.</li>
-                </ol>
+                <p style="font-size: 18px; font-weight: 600; color: var(--text); max-width: 700px; margin: 0 auto 32px;"><strong>If Guava doesn't help you close at least ONE extra sale in the first 7 days, email us for a full refund. No questions asked.</strong></p>
                 
-                <p style="font-size: 17px; margin-top: 32px;">We're not holding your money hostage. If it doesn't work for you, just cancel. But we're betting after your advisors close 5-10 extra sales in two weeks, you'll want to keep it.</p>
+                <p style="font-size: 17px; margin-top: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">We're not asking you to take our word for it. Use Guava on real estimates with real customers. If your advisors don't close more sales, we don't deserve your money.</p>
                 
-                <p style="font-size: 18px; font-weight: 600; color: var(--text); margin-top: 24px;">That's not a gamble. That's just math.</p>
+                <p style="font-size: 18px; font-weight: 600; color: var(--text); margin-top: 24px;">That's not a gamble. That's just confidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section>
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 48px;">Simple Pricing. No Games.</h2>
+            
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>Pay Monthly</h3>
+                    <div class="pricing-price">$149</div>
+                    <div class="pricing-period">per month</div>
+                    <p style="color: var(--text-light); margin: 16px 0;">Cancel anytime. No contracts. No setup fees.</p>
+                    <a href="[STRIPE_CHECKOUT_URL_MONTHLY]" class="cta-button" style="font-size: 16px; padding: 14px 32px;">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Pay Annually</h3>
+                    <div class="pricing-price">$990</div>
+                    <div class="pricing-period">per year</div>
+                    <div class="pricing-save">Save $798</div>
+                    <p style="color: var(--text-light); margin: 16px 0;">That's basically 5+ months free. Lock in this price now.</p>
+                    <a href="[STRIPE_CHECKOUT_URL_ANNUAL]" class="cta-button" style="font-size: 16px; padding: 14px 32px;">Get Started</a>
+                </div>
+            </div>
+            
+            <div style="max-width: 600px; margin: 48px auto 0; text-align: center;">
+                <p style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 16px;">Both plans include:</p>
+                <ul class="pricing-features" style="display: inline-block; text-align: left;">
+                    <li>Instant access to Guava</li>
+                    <li>Unlimited estimates</li>
+                    <li>All future updates</li>
+                    <li>Email support (2-hour response time)</li>
+                    <li>Works with Tekmetric</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -1174,8 +1277,8 @@
             <h2>Here's What Happens Next:</h2>
             
             <div class="final-cta-list">
-                <p>Click "Start Your 14-Day Trial" below.</p>
-                <p>Enter your shop name and payment info (we won't charge until day 15 if you keep it).</p>
+                <p>Click "Get Instant Access" below.</p>
+                <p>Enter your shop name and payment info.</p>
                 <p>We'll email you your license key in 60 seconds.</p>
                 <p>Activate Guava in Tekmetric (takes 2 minutes).</p>
                 <p>Have your advisors test it on the next estimate.</p>
@@ -1184,15 +1287,15 @@
             
             <p style="font-size: 18px; margin: 40px 0;">That's it.</p>
             
-            <p>Two weeks from now, you'll either be closing more sales and wondering why you didn't start sooner... or you'll have gotten a free test drive and cancelled.</p>
+            <p>Seven days from now, you'll either be closing more sales and wondering why you didn't start sooner... or you'll email us for a refund and we'll process it immediately.</p>
             
             <p class="emphasis">You literally cannot lose.</p>
             
             <p>The only way you lose is by doing nothing and watching another $50,000 in repairs walk out the door this month.</p>
             
             <div style="margin: 60px 0;">
-                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Start Your 14-Day Free Trial - $197/Month</a>
-                <p class="cta-subtext">14-day free trial • Cancel anytime • No setup fees • Works with Tekmetric</p>
+                <a href="[STRIPE_CHECKOUT_URL_HERE]" class="cta-button">Get Instant Access - $149/Month or $990/Year</a>
+                <p class="cta-subtext">7-day money-back guarantee • Cancel anytime • No setup fees • Works with Tekmetric</p>
             </div>
         </div>
     </section>
