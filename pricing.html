@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guava Pricing - AI Sales Scripts for Auto Shops</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="icon16.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="icon48.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="icon128.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #FFD93D 0%, #4CB963 50%, #F77F87 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            height: 48px;
+            width: 48px;
+        }
+
+        .logo span {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4CB963;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #F77F87;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .value-prop {
+            font-size: 18px;
+            color: #607d8b;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Pricing Cards */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: #FFD93D;
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ffffff 0%, #fffef7 100%);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FFD93D 0%, #F77F87 100%);
+            color: #2c3e50;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 217, 61, 0.4);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .price {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .price-amount {
+            font-size: 56px;
+            font-weight: 800;
+            color: #2c3e50;
+        }
+
+        .price-currency {
+            font-size: 32px;
+            vertical-align: super;
+        }
+
+        .price-period {
+            font-size: 18px;
+            color: #78909c;
+        }
+
+        .price-detail {
+            text-align: center;
+            color: #78909c;
+            font-size: 16px;
+            margin-bottom: 20px;
+            min-height: 24px;
+        }
+
+        .savings {
+            background: linear-gradient(135deg, #FFD93D 0%, #F77F87 100%);
+            color: #2c3e50;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 25px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: #4CB963;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
+
+        .cta-button:hover {
+            background: #3da350;
+            transform: scale(1.02);
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            color: #546e7a;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: #4CB963;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .social-proof h2 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4CB963 0%, #F77F87 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #607d8b;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: linear-gradient(135deg, #F77F87 0%, #4CB963 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(247, 127, 135, 0.3);
+        }
+
+        .roi-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .roi-section p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .roi-calculation {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 60px 0;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .faq-answer {
+            font-size: 16px;
+            color: #546e7a;
+            line-height: 1.7;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-cta h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .footer-cta p {
+            font-size: 20px;
+            color: #607d8b;
+            margin-bottom: 30px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #4CB963;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #3da350;
+            transform: translateX(-5px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 20px;
+            }
+
+            .pricing-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+
+            .price-amount {
+                font-size: 48px;
+            }
+
+            .roi-section {
+                padding: 40px 20px;
+            }
+
+            .roi-section h2 {
+                font-size: 28px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="icon48.png" alt="Guava">
+                <span>Guava</span>
+            </div>
+            <h1>Choose Your Plan</h1>
+            <p class="subtitle">Stop losing sales. Start using AI.</p>
+            <p class="value-prop">
+                Every shop that installs Guava closes more repairs and handles objections better. 
+                Choose the plan that works for you.
+            </p>
+        </header>
+
+        <div class="pricing-container">
+            <!-- Monthly Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Monthly</div>
+                <div class="price">
+                    <span class="price-currency">$</span><span class="price-amount">149</span>
+                    <div class="price-period">per month</div>
+                </div>
+                <div class="price-detail">Billed monthly</div>
+                <div style="height: 52px;"></div>
+                <a href="https://buy.stripe.com/28E3cueBQ0WH5xb30Qasg00" class="cta-button">Start Monthly Plan</a>
+                <ul class="features-list">
+                    <li>Unlimited AI-powered sales scripts</li>
+                    <li>Smart objection handling for any customer response</li>
+                    <li>Works directly inside Tekmetric</li>
+                    <li>One license per shop location</li>
+                    <li>Email support</li>
+                    <li>Cancel anytime—no long-term commitment</li>
+                </ul>
+            </div>
+
+            <!-- Annual Plan -->
+            <div class="pricing-card featured">
+                <div class="badge">Best Value</div>
+                <div class="plan-name">Annual</div>
+                <div class="price">
+                    <span class="price-currency">$</span><span class="price-amount">990</span>
+                    <div class="price-period">per year</div>
+                </div>
+                <div class="price-detail">$82.50/month (billed annually)</div>
+                <div class="savings">💰 Save $798 per year</div>
+                <a href="https://buy.stripe.com/5kQaEW2T8cFp3p330Qasg01" class="cta-button">Start Annual Plan</a>
+                <ul class="features-list">
+                    <li>Unlimited AI-powered sales scripts</li>
+                    <li>Smart objection handling for any customer response</li>
+                    <li>Works directly inside Tekmetric</li>
+                    <li>One license per shop location</li>
+                    <li>Priority email support</li>
+                    <li>Lock in your rate—price increases don't affect you</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ROI Section -->
+        <div class="roi-section">
+            <h2>This pays for itself by closing ONE extra repair per month</h2>
+            <p>Let's do the math on just one additional $2,000 repair:</p>
+            <div class="roi-calculation">
+                <strong>One additional $2,000 repair/month</strong><br>
+                = $24,000 in extra annual revenue<br>
+                − $990 Guava annual cost<br>
+                = <strong>$23,010 profit increase</strong>
+            </div>
+            <p style="margin-top: 30px;">And your team will close way more than just one extra repair per month.</p>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">What if I have multiple shop locations?</div>
+                <div class="faq-answer">
+                    Each license works for one shop location. If you operate multiple shops, you'll need a separate license for each location. Simply purchase additional licenses during checkout or contact us for volume pricing.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I cancel anytime?</div>
+                <div class="faq-answer">
+                    Yes! Both monthly and annual plans can be cancelled at any time. Monthly plans stop at the end of your billing cycle. Annual plans are prorated if you cancel early—we're not in the business of keeping unhappy customers.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How long does setup take?</div>
+                <div class="faq-answer">
+                    About 2 minutes. Install the Chrome extension, enter your license key and shop name, and you're ready to go. Your service advisors can start using Guava on their very next estimate.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What if my shop name changes in Tekmetric?</div>
+                <div class="faq-answer">
+                    No problem! Just email us at support@getguava.ai and we'll update your license to match your new shop name within 2 hours during business hours.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is there a free trial?</div>
+                <div class="faq-answer">
+                    We don't offer free trials because we're confident Guava will transform how your advisors sell. However, we do offer a 14-day money-back guarantee. If you're not seeing results in the first two weeks, we'll refund you in full—no questions asked.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you offer training?</div>
+                <div class="faq-answer">
+                    Guava is so intuitive, most advisors are using it successfully within their first call. But yes—we include email support and can provide a quick walkthrough video if your team needs it.
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta">
+            <h2>Ready to Close More Repairs?</h2>
+            <p>Join the shops already using AI to boost their sales.</p>
+            <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="cta-button" style="max-width: 400px; margin: 0 auto;">Choose Your Plan ↑</a>
+            <br>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
