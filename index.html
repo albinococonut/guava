@@ -97,6 +97,7 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s ease forwards;
+            position: relative;
         }
         
         @keyframes fadeInUp {
@@ -108,6 +109,34 @@
         
         section:nth-child(even) {
             background: white;
+        }
+        
+        /* Add subtle patterns and depth to alternating sections */
+        section:nth-child(odd) {
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+        }
+        
+        /* Decorative elements for visual interest */
+        .section-decoration {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .section-decoration.top-left {
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at top left, rgba(247, 127, 135, 0.08), transparent 60%);
+        }
+        
+        .section-decoration.bottom-right {
+            bottom: 0;
+            right: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at bottom right, rgba(76, 185, 99, 0.08), transparent 60%);
         }
         
         /* Header */
@@ -267,13 +296,24 @@
         .problem-list {
             list-style: none;
             margin: 32px 0;
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
         
         .problem-list li {
-            padding: 16px 0;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
             font-size: 17px;
             line-height: 1.6;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        
+        .problem-list li:hover {
+            background: rgba(247, 127, 135, 0.03);
+            transform: translateX(4px);
         }
         
         .problem-list li:last-child {
@@ -283,16 +323,20 @@
         .problem-list strong {
             color: var(--text);
             font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 18px;
         }
         
         /* Stats Box */
         .stats-box {
-            background: white;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
             border: 2px solid var(--border);
             border-radius: 16px;
             padding: 32px;
             margin: 40px 0;
             text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
         
         .stats-box p {
@@ -319,13 +363,30 @@
             border-radius: 16px;
             padding: 32px 24px;
             transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         
         .comparison-card.featured {
             border-color: var(--green);
             border-width: 3px;
-            box-shadow: 0 8px 24px rgba(76, 185, 99, 0.2);
+            box-shadow: 0 8px 32px rgba(76, 185, 99, 0.25);
             transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.03) 0%, #ffffff 100%);
+            position: relative;
+        }
+        
+        .comparison-card.featured::before {
+            content: 'BEST VALUE';
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: var(--green);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .comparison-card:hover {
@@ -375,6 +436,21 @@
         
         .step {
             text-align: center;
+            position: relative;
+        }
+        
+        .step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 20px;
+            font-size: 32px;
+            color: var(--coral);
+            opacity: 0.3;
+        }
+        
+        .step:last-child::after {
+            display: none;
         }
         
         .step-number {
@@ -391,6 +467,29 @@
             color: white;
             margin: 0 auto 24px;
             box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
+            position: relative;
+        }
+        
+        .step-number::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: var(--gradient);
+            opacity: 0.2;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0;
+            }
         }
         
         .step h3 {
@@ -418,11 +517,30 @@
             padding: 40px 32px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+        
+        .feature-box:hover::before {
+            transform: scaleX(1);
         }
         
         .feature-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
         }
         
         .feature-box h3 {
@@ -470,11 +588,35 @@
             border: 2px solid var(--border);
             border-radius: 16px;
             padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+        }
+        
+        .economics-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
         
         .economics-card.winner {
             border-color: var(--green);
-            background: linear-gradient(135deg, rgba(76, 185, 99, 0.05) 0%, rgba(76, 185, 99, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.08) 0%, rgba(76, 185, 99, 0.02) 100%);
+            box-shadow: 0 4px 20px rgba(76, 185, 99, 0.2);
+            position: relative;
+        }
+        
+        .economics-card.winner::before {
+            content: '✓ RECOMMENDED';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--green);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .economics-card h3 {
@@ -503,11 +645,12 @@
         
         /* Josh Story */
         .story {
-            background: white;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
             border-left: 4px solid var(--coral);
             border-radius: 12px;
             padding: 32px;
             margin: 32px 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
         }
         
         .story h4 {
@@ -518,9 +661,11 @@
         
         .story-section {
             margin: 24px 0;
-            padding: 20px;
-            background: var(--bg);
-            border-radius: 8px;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         
         .story-section h5 {
@@ -536,8 +681,9 @@
         }
         
         .story .highlight {
-            background: rgba(76, 185, 99, 0.1);
-            border-left: 3px solid var(--green);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.12) 0%, rgba(76, 185, 99, 0.05) 100%);
+            border-left: 4px solid var(--green);
+            box-shadow: 0 4px 12px rgba(76, 185, 99, 0.15);
         }
         
         /* Pricing Section */
@@ -558,17 +704,40 @@
             padding: 40px 32px;
             text-align: center;
             transition: all 0.3s;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
         
         .pricing-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
         }
         
         .pricing-card.featured {
             border-color: var(--green);
             border-width: 3px;
-            box-shadow: 0 8px 24px rgba(76, 185, 99, 0.2);
+            box-shadow: 0 8px 32px rgba(76, 185, 99, 0.25);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.03) 0%, #ffffff 100%);
+            transform: scale(1.05);
+            position: relative;
+        }
+        
+        .pricing-card.featured::before {
+            content: '🎉 MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--green);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-8px);
         }
         
         .pricing-card h3 {
@@ -685,17 +854,98 @@
         
         /* Guarantee */
         .guarantee {
-            background: linear-gradient(135deg, rgba(76, 185, 99, 0.1) 0%, rgba(76, 185, 99, 0.05) 100%);
-            border: 2px solid var(--green);
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.12) 0%, rgba(76, 185, 99, 0.05) 100%);
+            border: 3px solid var(--green);
             border-radius: 16px;
             padding: 48px;
             margin: 48px 0;
             text-align: center;
+            box-shadow: 0 8px 32px rgba(76, 185, 99, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guarantee::before {
+            content: '✓';
+            position: absolute;
+            font-size: 200px;
+            color: rgba(76, 185, 99, 0.05);
+            top: -50px;
+            right: -50px;
+            font-weight: bold;
         }
         
         .guarantee h3 {
             color: var(--green);
             margin-bottom: 24px;
+            position: relative;
+        }
+        
+        /* Section Headers with subtle accents */
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+            position: relative;
+        }
+        
+        .section-header h2 {
+            margin-bottom: 16px;
+        }
+        
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 24px auto 0;
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 16px auto 0;
+        }
+        
+        /* Product showcase */
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+        
+        .showcase-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .showcase-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .showcase-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .showcase-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 24px 20px 16px;
+            font-size: 14px;
+            font-weight: 600;
         }
         
         /* Final CTA Section */
@@ -793,6 +1043,18 @@
             }
             
             .pricing {
+                grid-template-columns: 1fr;
+            }
+            
+            .step::after {
+                display: none;
+            }
+            
+            .section-header {
+                margin-bottom: 40px;
+            }
+            
+            .product-showcase {
                 grid-template-columns: 1fr;
             }
             
@@ -921,7 +1183,10 @@
     <!-- Comparison Table -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">New Hire vs. Veteran vs. New Hire WITH Guava</h2>
+            <div class="section-header">
+                <h2>New Hire vs. Veteran vs. New Hire WITH Guava</h2>
+                <p>See how Guava instantly levels up performance—no experience required</p>
+            </div>
             
             <div class="comparison">
                 <div class="comparison-card">
@@ -968,7 +1233,9 @@
     <!-- How It Works -->
     <section>
         <div class="container">
-            <h2 style="text-align: center;">It's Stupid Simple (That's Why It Actually Gets Used)</h2>
+            <div class="section-header">
+                <h2>It's Stupid Simple (That's Why It Actually Gets Used)</h2>
+            </div>
             
             <div class="steps">
                 <div class="step">
@@ -998,10 +1265,40 @@
         </div>
     </section>
 
+    <!-- Product Showcase -->
+    <section style="background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2>See Guava in Action</h2>
+                <p>Watch how Guava gives your advisors the perfect script for every situation</p>
+            </div>
+            
+            <div class="product-showcase">
+                <div class="showcase-item">
+                    <img src="Image 4.png" alt="Complete sales script with opening and priority repairs" />
+                    <div class="showcase-caption">Generate a complete sales script with opening, priority repairs, and closing</div>
+                </div>
+                
+                <div class="showcase-item">
+                    <img src="Image 3.png" alt="Objection handler with preset responses" />
+                    <div class="showcase-caption">Handle objections instantly—type custom or pick from common responses</div>
+                </div>
+                
+                <div class="showcase-item">
+                    <img src="Image 2.png" alt="Price objection with pre-written response" />
+                    <div class="showcase-caption">Get word-for-word responses to "That's more than I expected to spend"</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- The 3 Outcomes -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">What You Get</h2>
+            <div class="section-header">
+                <h2>What You Get</h2>
+                <p>Three immediate outcomes that transform your service department</p>
+            </div>
             
             <div class="features">
                 <div class="feature-box">
@@ -1040,7 +1337,10 @@
     <!-- The Economics -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">The Economics Are Insane</h2>
+            <div class="section-header">
+                <h2>The Economics Are Insane</h2>
+                <p>Compare the traditional training path vs. the Guava shortcut</p>
+            </div>
             
             <div class="economics">
                 <div class="economics-card">
@@ -1115,7 +1415,10 @@
     <!-- FAQ -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">Frequently Asked Questions</h2>
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know before getting started</p>
+            </div>
             
             <div class="faq">
                 <div class="faq-item">
@@ -1237,7 +1540,10 @@
     <!-- Pricing Section -->
     <section>
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 48px;">Simple Pricing. No Games.</h2>
+            <div class="section-header">
+                <h2>Simple Pricing. No Games.</h2>
+                <p>Choose the plan that works best for your shop</p>
+            </div>
             
             <div class="pricing">
                 <div class="pricing-card">
