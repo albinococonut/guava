@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Shop to Your Guava License</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            color: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFFBF0 100%);
+            padding: 40px 32px;
+            text-align: center;
+            border-bottom: 2px solid #F77F87;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-button:hover {
+            background: #f9fafb;
+            color: #374151;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .logo img {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .content {
+            padding: 40px 32px;
+        }
+        
+        .error {
+            background: #FFF5F7;
+            border: 2px solid #F77F87;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: #991b1b;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        
+        .shop-comparison {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .shop-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+        
+        .shop-card.current {
+            border-color: #4CB963;
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.05) 0%, rgba(76, 185, 99, 0.01) 100%);
+        }
+        
+        .shop-card.adding {
+            border-color: #F77F87;
+            background: linear-gradient(135deg, rgba(247, 127, 135, 0.05) 0%, rgba(247, 127, 135, 0.01) 100%);
+        }
+        
+        .shop-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .shop-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .shop-card.current .shop-icon {
+            background: linear-gradient(135deg, #4CB963 0%, #5fd177 100%);
+        }
+        
+        .shop-card.adding .shop-icon {
+            background: linear-gradient(135deg, #F77F87 0%, #ff9199 100%);
+        }
+        
+        .shop-card-title {
+            flex: 1;
+        }
+        
+        .shop-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .shop-id {
+            font-size: 16px;
+            color: #1f2937;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        
+        .shop-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .shop-card.current .shop-status {
+            background: rgba(76, 185, 99, 0.1);
+            color: #4CB963;
+        }
+        
+        .shop-card.adding .shop-status {
+            background: rgba(247, 127, 135, 0.1);
+            color: #F77F87;
+        }
+        
+        .shop-details {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .shop-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .shop-detail-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .shop-detail-value {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .arrow-down {
+            text-align: center;
+            margin: 24px 0;
+            font-size: 32px;
+            color: #F77F87;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .result-card {
+            background: linear-gradient(135deg, rgba(76, 185, 99, 0.08) 0%, rgba(76, 185, 99, 0.02) 100%);
+            border: 3px solid #4CB963;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        
+        .result-card::before {
+            content: '✓ AFTER PURCHASE';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CB963;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .result-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+        
+        .result-list li {
+            padding: 10px 0;
+            font-size: 15px;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+        
+        .result-list li::before {
+            content: "✓";
+            color: #4CB963;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .result-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #4CB963;
+            text-align: center;
+        }
+        
+        .result-total-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .result-total-amount {
+            font-size: 42px;
+            font-weight: 800;
+            color: #4CB963;
+            line-height: 1;
+        }
+        
+        .result-total-period {
+            font-size: 16px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        
+        .pricing-breakdown {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+        
+        .pricing-breakdown h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 15px;
+        }
+        
+        .pricing-row.total {
+            border-top: 2px solid #e5e7eb;
+            margin-top: 10px;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #1f2937;
+        }
+        
+        .pricing-label {
+            color: #6b7280;
+        }
+        
+        .pricing-value {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .pricing-row.total .pricing-value {
+            color: #4CB963;
+            font-size: 24px;
+        }
+        
+        .features-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .features-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        .features-list {
+            list-style: none;
+        }
+        
+        .features-list li {
+            padding: 8px 0;
+            font-size: 15px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .features-list li::before {
+            content: "→";
+            color: #4CB963;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .checkout-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
+        }
+        
+        .checkout-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(247, 127, 135, 0.4);
+        }
+        
+        .checkout-button:active {
+            transform: translateY(0);
+        }
+        
+        .checkout-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .guarantee {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .guarantee p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .guarantee strong {
+            color: #1f2937;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .header {
+                padding: 32px 24px;
+            }
+            
+            .content {
+                padding: 32px 24px;
+            }
+            
+            .back-button {
+                position: static;
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="javascript:history.back()" class="back-button">
+                ← Cancel
+            </a>
+            <div class="logo">
+                <img src="icon48.png" alt="Guava">
+                <span class="logo-text">Guava</span>
+            </div>
+            <h1>Add Shop to Your License</h1>
+            <p class="subtitle">Expand Guava to another location</p>
+        </div>
+        
+        <div class="content">
+            <div id="error" class="error"></div>
+            
+            <div class="section-title">Your Current Setup</div>
+            
+            <div class="shop-comparison">
+                <div class="shop-card current">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">✓</div>
+                        <div class="shop-card-title">
+                            <div class="shop-label">Currently Active</div>
+                            <div class="shop-id" id="currentShopId">Loading...</div>
+                        </div>
+                        <span class="shop-status">✓ Active</span>
+                    </div>
+                    <div class="shop-details">
+                        <div class="shop-detail-row">
+                            <span class="shop-detail-label">Monthly Cost</span>
+                            <span class="shop-detail-value">$149</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shop-card adding">
+                    <div class="shop-card-header">
+                        <div class="shop-icon">+</div>
+                        <div class="shop-card-title">
+                            <div class="shop-label">You're Adding</div>
+                            <div class="shop-id" id="newShopId">Loading...</div>
+                        </div>
+                        <span class="shop-status">⚠️ Not Active</span>
+                    </div>
+                    <div class="shop-details">
+                        <div class="shop-detail-row">
+                            <span class="shop-detail-label">Monthly Cost</span>
+                            <span class="shop-detail-value">+$149</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow-down">↓</div>
+            
+            <div class="result-card">
+                <h3 style="font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700; color: #1f2937; margin-bottom: 8px;">After Purchase</h3>
+                <ul class="result-list">
+                    <li>Both shops active and working</li>
+                    <li>All advisors at both locations can use Guava</li>
+                    <li>Unlimited scripts at both shops</li>
+                    <li>Manage each shop independently</li>
+                </ul>
+                <div class="result-total">
+                    <div class="result-total-label">Your New Monthly Total</div>
+                    <div class="result-total-amount">$298</div>
+                    <div class="result-total-period">per month for 2 shops</div>
+                </div>
+            </div>
+            
+            <div class="features-box">
+                <h3>What's Included Per Shop</h3>
+                <ul class="features-list">
+                    <li>Unlimited advisors at that location</li>
+                    <li>Unlimited AI-generated scripts</li>
+                    <li>Real-time objection handling</li>
+                    <li>All future updates included</li>
+                    <li>Cancel any shop anytime</li>
+                </ul>
+            </div>
+            
+            <button id="checkout-button" class="checkout-button">
+                Add Shop for $149/month
+            </button>
+            
+            <div class="guarantee">
+                <p><strong>Charged to your existing payment method</strong><br>
+                7-day money-back guarantee • Cancel anytime • No contracts</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('code');
+        const shopId = urlParams.get('shop');
+        
+        // Display shop IDs
+        if (shopId) {
+            document.getElementById('newShopId').textContent = 'shop.tekmetric.com/shop/' + shopId;
+        }
+        
+        // Try to get current shop from URL or show placeholder
+        document.getElementById('currentShopId').textContent = 'Your registered shop';
+        
+        // Initialize Stripe
+        const stripe = Stripe('pk_live_51QMXh3BBiGsNei2VSz9qKhTphtd6TWnDjExZrb5iGxLGpqUKuRbXsNB5v4cL7hzUhINK3IEH9Fa2Jdl6xQ3grvTE00mSJZ38jp');
+        
+        const button = document.getElementById('checkout-button');
+        const errorDiv = document.getElementById('error');
+        
+        button.addEventListener('click', async () => {
+            if (!customerId || !shopId) {
+                showError('Missing required information. Please try again from the Guava extension.');
+                return;
+            }
+            
+            button.disabled = true;
+            button.textContent = 'Loading checkout...';
+            
+            try {
+                // Call your backend to create checkout session
+                const response = await fetch('https://guava-backend.jolly-wind-0885.workers.dev/create-add-shop-checkout', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        customerId: customerId,
+                        shopId: shopId
+                    })
+                });
+                
+                const session = await response.json();
+                
+                if (session.error) {
+                    throw new Error(session.error);
+                }
+                
+                // Redirect to Stripe Checkout
+                const result = await stripe.redirectToCheckout({
+                    sessionId: session.id
+                });
+                
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+            } catch (error) {
+                showError(error.message);
+                button.disabled = false;
+                button.textContent = 'Add Shop for $149/month';
+            }
+        });
+        
+        function showError(message) {
+            errorDiv.textContent = '⚠️ ' + message;
+            errorDiv.style.display = 'block';
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
