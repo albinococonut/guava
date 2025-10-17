@@ -586,12 +586,20 @@ if (shopId) {
 const button = document.getElementById('checkout-button');
 const errorDiv = document.getElementById('error');
 
+let isProcessing = false;
+
 button.addEventListener('click', async () => {
+    // Prevent double-clicks
+    if (isProcessing) {
+        return;
+    }
+    
     if (!activationCode || !shopId) {
         showError('Missing required information. Please try again from the Guava extension.');
         return;
     }
     
+    isProcessing = true;
     button.disabled = true;
     button.textContent = 'Adding shop...';
     
