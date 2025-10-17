@@ -607,10 +607,10 @@
                 const response = await fetch('https://guava-backend.jolly-wind-0885.workers.dev/create-add-shop-checkout', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        customerId: customerId,
-                        shopId: shopId
-                    })
+                   body: JSON.stringify({
+                    activationCode: customerId,
+                    shopId: shopId
+                })
                 });
                 
                 const session = await response.json();
