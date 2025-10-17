@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
     
     <style>
         * {
@@ -486,7 +485,7 @@
                 ← Cancel
             </a>
             <div class="logo">
-                <img src="icon48.png" alt="Guava">
+                <img src="https://getguava.ai/icon48.png" alt="Guava">
                 <span class="logo-text">Guava</span>
             </div>
             <h1>Add Shop to Your License</h1>
@@ -504,7 +503,7 @@
                         <div class="shop-icon">✓</div>
                         <div class="shop-card-title">
                             <div class="shop-label">Currently Active</div>
-                            <div class="shop-id" id="currentShopId">Loading...</div>
+                            <div class="shop-id" id="currentShopId">Your registered shop</div>
                         </div>
                         <span class="shop-status">✓ Active</span>
                     </div>
@@ -576,7 +575,7 @@
     <script>
        // Get URL parameters
 const urlParams = new URLSearchParams(window.location.search);
-const customerId = urlParams.get('code');
+const activationCode = urlParams.get('code');
 const shopId = urlParams.get('shop');
 
 // Display shop IDs
@@ -584,14 +583,11 @@ if (shopId) {
     document.getElementById('newShopId').textContent = 'shop.tekmetric.com/shop/' + shopId;
 }
 
-// Try to get current shop from URL or show placeholder
-document.getElementById('currentShopId').textContent = 'Your registered shop';
-
 const button = document.getElementById('checkout-button');
 const errorDiv = document.getElementById('error');
 
 button.addEventListener('click', async () => {
-    if (!customerId || !shopId) {
+    if (!activationCode || !shopId) {
         showError('Missing required information. Please try again from the Guava extension.');
         return;
     }
@@ -604,7 +600,7 @@ button.addEventListener('click', async () => {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                activationCode: customerId,
+                activationCode: activationCode,
                 shopId: shopId
             })
         });
@@ -632,7 +628,7 @@ button.addEventListener('click', async () => {
     } catch (error) {
         showError(error.message);
         button.disabled = false;
-        button.textContent = 'Add This Shop for $149/month';
+        button.textContent = 'Add Shop for $149/month';
     }
 });
 
@@ -644,3 +640,31 @@ function showError(message) {
     </script>
 </body>
 </html>
+```
+
+4. Save the file
+
+### Step 3.2: Upload to Your Website
+
+1. Log into your web hosting (wherever getguava.ai is hosted)
+2. Navigate to the root directory (where your main website files are)
+3. Upload `add-shop.html`
+4. Make sure it's accessible at: `https://getguava.ai/add-shop.html`
+
+✅ **HTML page is now live!**
+
+---
+
+## PART 4: Test the Complete Flow (5 minutes)
+
+### Step 4.1: Get a Test Activation Code
+
+1. Open your Google Sheet
+2. Find a row with an activation code that has a Stripe subscription ID in Column F
+3. Copy that activation code
+
+### Step 4.2: Test the URL
+
+Open this URL in your browser (replace with your test data):
+```
+https://getguava.ai/add-shop.html?code=YOUR_ACTIVATION_CODE&shop=99999
