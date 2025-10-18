@@ -809,8 +809,8 @@
         });
         
         document.getElementById('goToShopButton').addEventListener('click', () => {
-            window.location.href = 'https://shop.tekmetric.com/shop/' + shopId;
-        });
+    window.location.href = 'https://shop.tekmetric.com/admin/shop/' + shopId + '/repair-orders?view=column&board=ACTIVE';
+});
         
         function showError(message) {
             errorDiv.textContent = '⚠️ ' + message;
