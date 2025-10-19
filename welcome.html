@@ -422,19 +422,48 @@
     </div>
     
     <script>
-        // Get customer_id from URL parameter
-        function getCustomerIdFromUrl() {
+        async function loadCustomerId() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('customer_id') || 'cus_PLACEHOLDER';
+            const sessionId = urlParams.get('session_id');
+            
+            if (!sessionId) {
+                document.getElementById('licenseKey').textContent = 'ERROR: No session ID found';
+                return;
+            }
+            
+            document.getElementById('licenseKey').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch('https://guava-backend.jolly-wind-0885.workers.dev/get-customer-id', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId })
+                });
+                
+                const result = await response.json();
+                
+                if (result.customer_id) {
+                    document.getElementById('licenseKey').textContent = result.customer_id;
+                } else {
+                    document.getElementById('licenseKey').textContent = 'ERROR: Could not load activation code';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('licenseKey').textContent = 'ERROR: Failed to load';
+            }
         }
         
-        // Display the license key
-        document.getElementById('licenseKey').textContent = getCustomerIdFromUrl();
+        // Load customer ID when page loads
+        loadCustomerId();
         
         // Copy license key to clipboard
         function copyLicenseKey() {
             const licenseKey = document.getElementById('licenseKey').textContent;
             const copyBtn = document.getElementById('copyBtn');
+            
+            if (licenseKey.startsWith('ERROR') || licenseKey === 'Loading...') {
+                return;
+            }
             
             navigator.clipboard.writeText(licenseKey).then(() => {
                 copyBtn.textContent = 'Copied! ✓';
