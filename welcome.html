@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Guava! 🥑</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #fafafa;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFFBF0 100%);
+            padding: 32px;
+            border-bottom: 3px solid #F77F87;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: url('https://albinococonut.github.io/guava/icon48.png') center/contain no-repeat;
+        }
+        
+        .brand-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-subtitle {
+            font-size: 18px;
+            color: #1f2937;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        /* Body */
+        .body {
+            padding: 40px 32px;
+        }
+        
+        /* License Box */
+        .license-section {
+            background: white;
+            border: 3px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.15);
+        }
+        
+        .license-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .license-key-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .license-key {
+            flex: 1;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: #F77F87;
+            letter-spacing: 1px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(247, 127, 135, 0.3);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-btn.copied {
+            background: #4CB963;
+        }
+        
+        /* Steps */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            margin: 32px 0;
+        }
+        
+        .steps-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+        
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            min-width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: #1f2937;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        
+        .step-content p {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        /* Download Chrome */
+        .chrome-note {
+            background: #FFF5F7;
+            border-left: 3px solid #F77F87;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+        
+        .chrome-note p {
+            font-size: 13px;
+            color: #991b1b;
+            font-weight: 600;
+        }
+        
+        .chrome-note a {
+            color: #F77F87;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        .chrome-note a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Install Button */
+        .install-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(247, 127, 135, 0.3);
+            margin-top: 12px;
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 127, 135, 0.4);
+        }
+        
+        .install-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFFBF0 100%);
+            padding: 24px 32px;
+            border-top: 2px solid #F77F87;
+            border-radius: 0 0 12px 12px;
+            text-align: center;
+        }
+        
+        .footer p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .footer a {
+            color: #F77F87;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 640px) {
+            body {
+                padding: 20px 10px;
+            }
+            
+            .header {
+                padding: 24px 20px;
+            }
+            
+            .body {
+                padding: 32px 20px;
+            }
+            
+            .license-key-container {
+                flex-direction: column;
+            }
+            
+            .copy-btn {
+                width: 100%;
+            }
+            
+            .brand-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <div class="logo"></div>
+                <div class="brand-name">Guava</div>
+            </div>
+            <p class="header-subtitle">You're about to make selling effortless.</p>
+        </div>
+        
+        <!-- Body -->
+        <div class="body">
+            <!-- License Key -->
+            <div class="license-section">
+                <div class="license-label">Your Activation Code</div>
+                <div class="license-key-container">
+                    <div class="license-key" id="licenseKey">Loading...</div>
+                    <button class="copy-btn" id="copyBtn" onclick="copyLicenseKey()">Copy</button>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <!-- Setup Steps -->
+            <h2 class="steps-title">2-Minute Setup</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Download Chrome (if needed)</h3>
+                    <p style="margin-bottom: 8px;">Guava only works in Google Chrome.</p>
+                    <p style="font-size: 13px;"><a href="https://www.google.com/chrome/" target="_blank" style="color: #F77F87; text-decoration: none; font-weight: 600;">→ Get Chrome here</a> (it's free)</p>
+                    <div class="chrome-note">
+                        <p>⚠️ Guava only works in Chrome - not Safari, Firefox, or Edge</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Install the Guava Chrome Extension</h3>
+                    <p>Click the button below to add Guava to Chrome. Takes 10 seconds.</p>
+                    <a href="https://chrome.google.com/webstore" class="install-btn" target="_blank">
+                        Install Guava Extension
+                    </a>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Open Tekmetric IN CHROME</h3>
+                    <p>Navigate to your shop in Tekmetric. Make sure you're using Chrome.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Click the Guava Icon & Enter Your Code</h3>
+                    <p>Look for the Extensions icon (puzzle piece) in your Chrome toolbar, find "Guava Sales Coach", and click it. Then paste your activation code from above.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Generate Your First Script</h3>
+                    <p>Open any estimate, click "Show Me What to Say", and watch the magic happen!</p>
+                </div>
+            </div>
+            
+            <!-- What to Expect -->
+            <div style="background: #f9fafb; border-radius: 12px; padding: 24px; margin-top: 32px;">
+                <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #0a0a0a;">What to Expect</h2>
+                <ul style="margin: 0; padding-left: 20px; color: #4b5563; line-height: 1.8; font-size: 15px;">
+                    <li>Know exactly what to say on every estimate</li>
+                    <li style="color: #4CB963; font-weight: 600;">+$10K/month per advisor (average)</li>
+                    <li>Handle objections like "too expensive" or "I need to think about it"</li>
+                    <li>Your advisors will sound like pros on day one</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Need help?</strong> We'll get you sorted in &lt; 10 minutes.</p>
+            <p><a href="mailto:support@getguava.ai">support@getguava.ai</a></p>
+            <p style="margin-top: 16px;">Want to add more shops? <a href="https://getguava.ai">Get another license</a></p>
+            <p style="margin-top: 16px; font-size: 12px; color: #9ca3af;">
+                P.S. - Your first script is going to feel like magic. Seriously.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Get customer_id from URL parameter
+        function getCustomerIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('customer_id') || 'cus_PLACEHOLDER';
+        }
+        
+        // Display the license key
+        document.getElementById('licenseKey').textContent = getCustomerIdFromUrl();
+        
+        // Copy license key to clipboard
+        function copyLicenseKey() {
+            const licenseKey = document.getElementById('licenseKey').textContent;
+            const copyBtn = document.getElementById('copyBtn');
+            
+            navigator.clipboard.writeText(licenseKey).then(() => {
+                copyBtn.textContent = 'Copied! ✓';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                copyBtn.textContent = 'Failed';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
