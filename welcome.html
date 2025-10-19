@@ -16,41 +16,38 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #fafafa;
             min-height: 100vh;
-            padding: 40px 20px;
         }
         
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        /* Header */
-        .header {
+        /* Hero Section */
+        .hero {
             background: linear-gradient(135deg, #FFF5F7 0%, #FFFBF0 100%);
-            padding: 48px 48px 40px 48px;
             border-bottom: 3px solid #F77F87;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
         }
         
         .logo {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             background: url('icon48.png') center/contain no-repeat;
         }
         
         .brand-name {
             font-family: 'Poppins', sans-serif;
-            font-size: 28px;
+            font-size: 48px;
             font-weight: 800;
             background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
             -webkit-background-clip: text;
@@ -58,67 +55,73 @@
             background-clip: text;
         }
         
-        .header-subtitle {
-            font-size: 18px;
+        .hero-subtitle {
+            font-size: 24px;
             color: #1f2937;
             font-weight: 500;
-            margin-top: 4px;
         }
         
-        /* Body */
-        .body {
-            padding: 48px;
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
         }
         
-        /* License Box */
+        /* License Section */
         .license-section {
+            max-width: 900px;
+            margin: 0 auto 80px auto;
             background: white;
             border: 3px solid transparent;
             background-image: linear-gradient(white, white), linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
             background-origin: border-box;
             background-clip: padding-box, border-box;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.15);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(247, 127, 135, 0.15);
         }
         
         .license-label {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             color: #991b1b;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            text-align: center;
         }
         
         .license-key-container {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .license-key {
             flex: 1;
-            background: white;
+            background: #f9fafb;
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px 20px;
+            border-radius: 12px;
+            padding: 20px 24px;
             font-family: 'Courier New', monospace;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: #F77F87;
             letter-spacing: 1px;
+            text-align: center;
         }
         
         .copy-btn {
             background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 16px 24px;
+            border-radius: 12px;
+            padding: 20px 32px;
             font-family: 'Inter', sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
@@ -127,7 +130,7 @@
         
         .copy-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(247, 127, 135, 0.3);
+            box-shadow: 0 4px 16px rgba(247, 127, 135, 0.3);
         }
         
         .copy-btn:active {
@@ -138,31 +141,52 @@
             background: #4CB963;
         }
         
-        /* Steps */
-        .divider {
-            height: 2px;
-            background: linear-gradient(90deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
-            margin: 32px 0;
+        /* Steps Section */
+        .steps-section {
+            max-width: 1100px;
+            margin: 0 auto;
         }
         
-        .steps-title {
+        .section-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 20px;
+            font-size: 36px;
             font-weight: 700;
             color: #1f2937;
-            margin-bottom: 24px;
+            text-align: center;
+            margin-bottom: 60px;
         }
         
-        .step {
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+        
+        .step-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .step-header {
             display: flex;
+            align-items: center;
             gap: 16px;
-            margin-bottom: 24px;
-            align-items: flex-start;
+            margin-bottom: 16px;
         }
         
         .step-number {
-            min-width: 40px;
-            height: 40px;
+            min-width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
             color: white;
             border-radius: 50%;
@@ -170,31 +194,30 @@
             align-items: center;
             justify-content: center;
             font-family: 'Poppins', sans-serif;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 800;
             flex-shrink: 0;
         }
         
-        .step-content h3 {
+        .step-card h3 {
             font-family: 'Poppins', sans-serif;
-            font-size: 16px;
+            font-size: 20px;
             color: #1f2937;
-            margin-bottom: 6px;
             font-weight: 700;
         }
         
-        .step-content p {
-            font-size: 14px;
+        .step-card p {
+            font-size: 15px;
             color: #6b7280;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
         
-        /* Download Chrome */
         .chrome-note {
             background: #FFF5F7;
             border-left: 3px solid #F77F87;
             padding: 12px 16px;
-            border-radius: 4px;
+            border-radius: 8px;
             margin-top: 12px;
         }
         
@@ -202,32 +225,22 @@
             font-size: 13px;
             color: #991b1b;
             font-weight: 600;
+            margin: 0;
         }
         
-        .chrome-note a {
-            color: #F77F87;
-            text-decoration: none;
-            font-weight: 700;
-        }
-        
-        .chrome-note a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Install Button */
         .install-btn {
             display: inline-block;
             background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
             color: white;
             text-decoration: none;
             padding: 16px 32px;
-            border-radius: 8px;
+            border-radius: 12px;
             font-family: 'Poppins', sans-serif;
             font-size: 16px;
             font-weight: 700;
             transition: all 0.3s;
             box-shadow: 0 4px 12px rgba(247, 127, 135, 0.3);
-            margin-top: 12px;
+            margin-top: 16px;
         }
         
         .install-btn:hover {
@@ -235,23 +248,85 @@
             box-shadow: 0 8px 20px rgba(247, 127, 135, 0.4);
         }
         
-        .install-btn:active {
-            transform: translateY(-1px);
+        .step-card a {
+            color: #F77F87;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .step-card a:hover {
+            text-decoration: underline;
+        }
+        
+        /* What to Expect */
+        .expect-section {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            margin: 60px auto;
+            max-width: 900px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .expect-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .expect-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .expect-section li {
+            font-size: 18px;
+            color: #4b5563;
+            line-height: 2;
+            padding-left: 32px;
+            position: relative;
+        }
+        
+        .expect-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CB963;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .expect-section li strong {
+            color: #4CB963;
         }
         
         /* Footer */
         .footer {
             background: linear-gradient(135deg, #FFF5F7 0%, #FFFBF0 100%);
-            padding: 32px 48px;
-            border-top: 2px solid #F77F87;
-            border-radius: 0 0 12px 12px;
+            border-top: 3px solid #F77F87;
+            padding: 60px 40px;
             text-align: center;
         }
         
+        .footer h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
         .footer p {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 8px;
+            font-size: 16px;
+            color: #4b5563;
+            margin-bottom: 12px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .footer a {
@@ -264,20 +339,48 @@
             text-decoration: underline;
         }
         
+        .footer-signature {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .footer-signature p:first-child {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 18px;
+        }
+        
+        .footer-signature p:last-child {
+            font-style: italic;
+            color: #6b7280;
+            margin-top: 16px;
+        }
+        
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 640px) {
-            body {
-                padding: 20px 10px;
+            .hero {
+                padding: 40px 20px;
             }
             
-            .header {
-                padding: 32px 24px;
+            .brand-name {
+                font-size: 36px;
             }
             
-            .body {
-                padding: 32px 24px;
+            .hero-subtitle {
+                font-size: 18px;
             }
             
-            .footer {
+            .main {
+                padding: 40px 20px;
+            }
+            
+            .license-section {
                 padding: 24px;
             }
             
@@ -289,106 +392,124 @@
                 width: 100%;
             }
             
-            .brand-name {
-                font-size: 24px;
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .step-card {
+                padding: 24px;
+            }
+            
+            .expect-section {
+                padding: 32px 24px;
+            }
+            
+            .footer {
+                padding: 40px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
             <div class="brand">
                 <div class="logo"></div>
                 <div class="brand-name">Guava</div>
             </div>
-            <p class="header-subtitle">You're about to make selling effortless.</p>
+            <p class="hero-subtitle">You're about to make selling effortless.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main">
+        <!-- License Section -->
+        <div class="license-section">
+            <div class="license-label">Your Activation Code</div>
+            <div class="license-key-container">
+                <div class="license-key" id="licenseKey">Loading...</div>
+                <button class="copy-btn" id="copyBtn" onclick="copyLicenseKey()">Copy</button>
+            </div>
         </div>
         
-        <!-- Body -->
-        <div class="body">
-            <!-- License Key -->
-            <div class="license-section">
-                <div class="license-label">Your Activation Code</div>
-                <div class="license-key-container">
-                    <div class="license-key" id="licenseKey">Loading...</div>
-                    <button class="copy-btn" id="copyBtn" onclick="copyLicenseKey()">Copy</button>
-                </div>
-            </div>
+        <!-- Steps Section -->
+        <div class="steps-section">
+            <h2 class="section-title">2-Minute Setup</h2>
             
-            <div class="divider"></div>
-            
-            <!-- Setup Steps -->
-            <h2 class="steps-title">2-Minute Setup</h2>
-            
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Download Chrome (if needed)</h3>
-                    <p style="margin-bottom: 8px;">Guava only works in Google Chrome.</p>
-                    <p style="font-size: 13px;"><a href="https://www.google.com/chrome/" target="_blank" style="color: #F77F87; text-decoration: none; font-weight: 600;">→ Get Chrome here</a> (it's free)</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h3>Download Chrome</h3>
+                    </div>
+                    <p>Guava only works in Google Chrome.</p>
+                    <p><a href="https://www.google.com/chrome/" target="_blank">→ Get Chrome here</a> (it's free)</p>
                     <div class="chrome-note">
-                        <p>⚠️ Guava only works in Chrome - not Safari, Firefox, or Edge</p>
+                        <p>⚠️ Not Safari, Firefox, or Edge - Chrome only</p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Install the Guava Chrome Extension</h3>
-                    <p>Click the button below to add Guava to Chrome. Takes 10 seconds.</p>
+                
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h3>Install Extension</h3>
+                    </div>
+                    <p>Add Guava to Chrome in 10 seconds.</p>
                     <a href="https://chrome.google.com/webstore/detail/ppaiipibgjjnadokahpjakhbneodpfdm" class="install-btn" target="_blank">
                         Install Guava Extension
                     </a>
                 </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Open Tekmetric IN CHROME</h3>
-                    <p>Navigate to your shop in Tekmetric. Make sure you're using Chrome.</p>
+                
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h3>Open Tekmetric</h3>
+                    </div>
+                    <p>Open Tekmetric IN CHROME and navigate to your shop.</p>
+                    <p style="font-size: 13px; color: #6b7280;">Make sure you're using Chrome - the extension needs to see which shop you're at.</p>
                 </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Click the Guava Icon & Enter Your Code</h3>
-                    <p>Look for the Extensions icon (puzzle piece) in your Chrome toolbar, find "Guava Sales Coach", and click it. Then paste your activation code from above.</p>
+                
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h3>Activate Guava</h3>
+                    </div>
+                    <p>Click the Extensions icon (puzzle piece) in Chrome, find "Guava Sales Coach", and click it.</p>
+                    <p>Paste your activation code from above.</p>
                 </div>
-            </div>
-            
-            <div class="step">
-                <div class="step-number">5</div>
-                <div class="step-content">
-                    <h3>Generate Your First Script</h3>
+                
+                <div class="step-card">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h3>Start Selling</h3>
+                    </div>
                     <p>Open any estimate, click "Show Me What to Say", and watch the magic happen!</p>
                 </div>
             </div>
-            
-            <!-- What to Expect -->
-            <div style="background: #f9fafb; border-radius: 12px; padding: 24px; margin-top: 32px;">
-                <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #0a0a0a;">What to Expect</h2>
-                <ul style="margin: 0; padding-left: 20px; color: #4b5563; line-height: 1.8; font-size: 15px;">
-                    <li>Know exactly what to say on every estimate</li>
-                    <li style="color: #4CB963; font-weight: 600;">+$10K/month per advisor (average)</li>
-                    <li>Handle objections like "too expensive" or "I need to think about it"</li>
-                    <li>Your advisors will sound like pros on day one</li>
-                </ul>
-            </div>
         </div>
         
-        <!-- Footer -->
-        <div class="footer">
-            <p><strong>Need help?</strong> We'll get you sorted in &lt; 10 minutes.</p>
-            <p><a href="mailto:support@getguava.ai">support@getguava.ai</a></p>
-            <p style="margin-top: 16px;">Want to add more shops? <a href="https://getguava.ai">Get another license</a></p>
-            <p style="margin-top: 16px; font-size: 12px; color: #9ca3af;">
-                P.S. - Your first script is going to feel like magic. Seriously.
-            </p>
+        <!-- What to Expect -->
+        <div class="expect-section">
+            <h2>What to Expect</h2>
+            <ul>
+                <li>Know exactly what to say on every estimate</li>
+                <li><strong>+$10K/month per advisor</strong> (average)</li>
+                <li>Handle objections like "too expensive" or "I need to think about it"</li>
+                <li>Your advisors will sound like pros on day one</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <h2>Need Help?</h2>
+        <p>Reply to this email and we'll help you get set up.</p>
+        <p>Want to add more shops? <a href="https://getguava.ai/pricing">Get additional licenses →</a></p>
+        
+        <div class="footer-signature">
+            <p>Let's close some jobs,<br>The Guava Team</p>
+            <p>P.S. - The first time you use it is going to feel like magic. Seriously.</p>
         </div>
     </div>
     
