@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤫 | Guava</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* Password Gate */
+        .password-gate {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .lock-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+        
+        .password-gate h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        
+        .password-gate p {
+            font-size: 16px;
+            color: #9ca3af;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .password-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 16px 24px;
+            background: #1f2937;
+            border: 2px solid #374151;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #F77F87;
+        }
+        
+        .password-input::placeholder {
+            color: #6b7280;
+        }
+        
+        .enter-btn {
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .enter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(247, 127, 135, 0.4);
+        }
+        
+        .error-msg {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 12px;
+            min-height: 20px;
+        }
+        
+        /* Secret Content */
+        .secret-content {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .secret-content.unlocked {
+            display: block;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-top: 20px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            font-size: 14px;
+            color: #9ca3af;
+            text-decoration: none;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: #F77F87;
+        }
+        
+        .brand-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        .secret-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 24px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+        
+        .headline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #F77F87 0%, #FFD93D 50%, #4CB963 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subheadline {
+            font-size: 20px;
+            color: #d1d5db;
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.5;
+        }
+        
+        .shh-box {
+            background: #1f2937;
+            color: white;
+            border: 2px solid #374151;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .shh-box p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0;
+            color: #e5e7eb;
+        }
+        
+        .shh-box strong {
+            color: #F77F87;
+        }
+        
+        /* Sections */
+        .section {
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 16px;
+            padding: 48px;
+            margin-bottom: 32px;
+        }
+        
+        .section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+        
+        .section p {
+            font-size: 18px;
+            color: #d1d5db;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .insight-box {
+            background: rgba(247, 127, 135, 0.1);
+            border-left: 4px solid #F77F87;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+        }
+        
+        .insight-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #F77F87;
+            margin-bottom: 12px;
+        }
+        
+        .insight-box p {
+            font-size: 16px;
+            color: #e5e7eb;
+            margin-bottom: 0;
+        }
+        
+        .example {
+            background: #111827;
+            border: 2px solid #F77F87;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .example-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #F77F87;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        
+        .dialogue-line {
+            margin-bottom: 16px;
+        }
+        
+        .speaker {
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        
+        .speech {
+            color: #d1d5db;
+            font-style: italic;
+            padding-left: 20px;
+        }
+        
+        .magic-moment {
+            background: rgba(76, 185, 99, 0.1);
+            border-left: 4px solid #4CB963;
+            padding: 16px 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+        
+        .magic-moment p {
+            color: #4CB963;
+            font-weight: 600;
+            font-size: 15px;
+            margin: 0;
+        }
+        
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            background: #111827;
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: 2px solid #F77F87;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            min-width: 140px;
+        }
+        
+        .flow-arrow {
+            color: #F77F87;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .cta-section {
+            background: transparent;
+            border: 2px solid #374151;
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 0;
+            color: #d1d5db;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #F77F87;
+            padding: 18px 48px;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+        }
+        
+        @media (max-width: 768px) {
+            .headline {
+                font-size: 32px;
+            }
+            
+            .section {
+                padding: 32px 24px;
+            }
+            
+            .flow {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Gate -->
+    <div class="password-gate" id="passwordGate">
+        <div class="lock-icon">🧞</div>
+        <h1>Shhh... This Page Doesn't Exist</h1>
+        <p>If you have the password, enter it below. If you don't... well, you probably shouldn't be here.</p>
+        <div>
+            <input 
+                type="password" 
+                id="passwordInput" 
+                class="password-input" 
+                placeholder="Enter password"
+                autocomplete="off"
+            >
+            <br>
+            <button class="enter-btn" onclick="checkPassword()">Enter</button>
+            <div class="error-msg" id="errorMsg"></div>
+        </div>
+    </div>
+
+    <!-- Secret Content -->
+    <div class="secret-content" id="secretContent">
+        <div class="header">
+            <a href="https://getguava.ai" class="back-link">← Back to Guava</a>
+            <div class="brand-name">Guava</div>
+            <div class="secret-badge">🧞 SECRET FEATURE</div>
+            <h1 class="headline">
+                Okay, So Here's the <span class="gradient-text">Thing Nobody Knows About</span>
+            </h1>
+            <p class="subheadline">
+                When you type in a customer concern, something magical happens. Guava automatically shows you the exact questions to ask. Your customer feels heard. Your tech gets the full story. No callbacks.
+            </p>
+        </div>
+        
+        <div class="shh-box">
+            <p>🧞 Seriously though - <strong>don't tell other shops about this.</strong> The fewer people who know about the secret Genie, the bigger your edge. Keep it quiet.</p>
+        </div>
+        
+        <!-- The Why -->
+        <div class="section">
+            <h2>Why This Matters So Much</h2>
+            <p>
+                Here's what most shops don't get: <strong>customers don't buy based on your price. They buy based on whether they feel heard.</strong>
+            </p>
+            <p>
+                When you ask follow-up questions and repeat their answers back, you're not just gathering details for your tech. You're showing the customer that you're actually paying attention. That you care. That you're on their side.
+            </p>
+            
+            <div class="insight-box">
+                <h3>The Sales Psychology</h3>
+                <p>
+                    People buy from shops they trust. And trust starts the moment you prove you're listening. The secret Genie makes that effortless - it reminds you which questions matter, you ask them, and the customer walks away thinking "damn, this place really gets it."
+                </p>
+            </div>
+        </div>
+        
+        <!-- How It Works -->
+        <div class="section">
+            <h2>Here's How It Actually Works</h2>
+            
+            <p style="text-align: center; margin-bottom: 32px; font-size: 16px; color: #9ca3af;">
+                It's stupid simple. Four steps, 30 seconds total:
+            </p>
+            
+            <div class="example">
+                <div class="example-label">Step 1: Customer Says Something Vague</div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Customer walks in:</div>
+                    <div class="speech">"My car pulls to the left when I brake."</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">You type that into Tekmetric.</div>
+                    <div class="speech" style="font-style: normal; color: #9ca3af;">Nothing special. Just like you always do.</div>
+                </div>
+            </div>
+            
+            <div class="example">
+                <div class="example-label">Step 2: Genie Appears Automatically 🧞</div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Without clicking anything, Genie pops up and asks you ONE question at a time:</div>
+                    <div class="speech">"When did you first notice this?"</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">You answer. Then it asks the next one:</div>
+                    <div class="speech">"Does it happen every time you brake?"</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">You answer. Next question:</div>
+                    <div class="speech">"Have you hit any curbs or potholes recently?"</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speech" style="font-style: normal; color: #9ca3af;">Keeps going until it has the full story.</div>
+                </div>
+            </div>
+            
+            <div class="example">
+                <div class="example-label">Step 3: You Repeat It Back</div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">After they answer all the questions, you repeat the whole story back to them:</div>
+                    <div class="speech">"Got it - started last week after that pothole on Main Street. Pulls left every single time you brake now. I'll get this looked at right away."</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speech" style="font-style: normal; color: #9ca3af;">This is the magic moment. Customer feels heard. Trusts you.</div>
+                </div>
+            </div>
+            
+            <div class="example">
+                <div class="example-label">Step 4: Done</div>
+                
+                <div class="magic-moment">
+                    <p>✨ Customer feels heard. Genie packages everything into a clean summary and saves it to the RO. Your tech opens it and has exactly what they need. Zero callbacks. Whole thing takes 30 seconds.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- The Real Benefit -->
+        <div class="section">
+            <h2>What This Actually Gets You</h2>
+            <p>
+                <strong>For you:</strong> No more awkward callback questions. No more looking unprepared.
+            </p>
+            <p>
+                <strong>For your tech:</strong> Complete diagnostic details from the jump. They can actually diagnose instead of guessing.
+            </p>
+            <p>
+                <strong>For your customer:</strong> They feel like they found the one shop that actually listens. That's repeat business.
+            </p>
+            
+            <div class="insight-box">
+                <h3>The Thing Nobody Talks About</h3>
+                <p>
+                    When you have to call a customer back and ask "wait, what kind of noise was it again?", you don't just waste time. You lose credibility. You look like you weren't paying attention the first time. The secret Genie prevents that moment from ever happening.
+                </p>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>You Already Have It</h2>
+            <p>If you're reading this, you found it. The secret Genie is already inside Guava. Just start using it. And seriously - keep this to yourself. The fewer shops that know, the better.</p>
+        </div>
+    </div>
+
+    <script>
+        const PASSWORD = 'guava genie';
+        
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value.toLowerCase().trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (input === PASSWORD) {
+                document.getElementById('passwordGate').style.display = 'none';
+                document.getElementById('secretContent').classList.add('unlocked');
+                // Keep dark background
+            } else {
+                errorMsg.textContent = 'Wrong password. Are you sure you should be here?';
+                setTimeout(() => {
+                    errorMsg.textContent = '';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
