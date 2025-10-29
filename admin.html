@@ -888,7 +888,7 @@
                 
                 const statusDot = `<span class="status-dot ${license.status}"></span>`;
                 
-                const licenseBadgeClass = registeredCount >= totalLicenses ? 'warning' : '';
+                const licenseBadgeClass = registeredCount < totalLicenses ? 'warning' : '';
                 const licenseBadge = `<span class="license-badge ${licenseBadgeClass}">${registeredCount}/${totalLicenses}</span>`;
                 
                 const row = tbody.insertRow();
