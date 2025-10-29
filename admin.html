@@ -504,8 +504,9 @@
 
     <div id="admin-panel">
         <div class="header">
-            <img src="/guava-logo.png" alt="Guava" class="logo">
+            <img src="/icon128.png" alt="Guava" class="logo">
             <h1 style="display: inline-block; vertical-align: middle;">Guava License Dashboard</h1>
+            <button onclick="logout()" style="float: right; padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 10px;">Logout</button>
             <p class="tagline">Manage your automotive service advisor licenses</p>
         </div>
         
@@ -612,12 +613,32 @@
         let allLicenses = [];
         let currentFilter = 'all';
 
+        // Check for saved login on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedToken = localStorage.getItem('guava_admin_token');
+            if (savedToken) {
+                authToken = savedToken;
+                loadLicenses();
+            }
+        });
+
         function login() {
             const password = document.getElementById('password').value;
             authToken = password;
             
+            // Save token to localStorage
+            localStorage.setItem('guava_admin_token', password);
+            
             document.getElementById('auth-error').style.display = 'none';
             loadLicenses();
+        }
+
+        function logout() {
+            localStorage.removeItem('guava_admin_token');
+            authToken = '';
+            document.getElementById('auth-form').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('password').value = '';
         }
 
         async function loadLicenses() {
