@@ -1036,11 +1036,14 @@
             const diffMs = date - now;
             const diffDays = Math.floor(diffMs / 86400000);
             
-            if (diffDays < 0) return '<span class="expired-text">Expired</span>';
-            if (diffDays < 7) return `<span class="expiring-soon">${diffDays} day${diffDays > 1 ? 's' : ''}</span>`;
-            if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''}`;
+            // Format the actual date
+            const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            // Add warning styling if expired or expiring soon
+            if (diffDays < 0) return `<span class="expired-text">${formattedDate}</span>`;
+            if (diffDays < 7) return `<span class="expiring-soon">${formattedDate}</span>`;
+            
+            return formattedDate;
         }
 
         function copyCode(code) {
