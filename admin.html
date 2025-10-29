@@ -494,6 +494,134 @@
             font-weight: 600;
             cursor: pointer;
         }
+        
+        /* Clickable column styles */
+        .clickable-cell {
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #525252;
+        }
+        .clickable-cell:hover {
+            color: #4CB963;
+            text-decoration: underline;
+        }
+        .clickable-cell:hover::after {
+            content: ' 🏪';
+            font-size: 14px;
+        }
+        .clickable-cell.notes-cell:hover::after {
+            content: ' 📝';
+        }
+        .clickable-cell.empty {
+            color: #a3a3a3;
+            font-style: italic;
+        }
+        
+        /* Shop management modal */
+        .shop-card {
+            background: #f7fafc;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .shop-url {
+            font-size: 14px;
+            color: #0a0a0a;
+            font-family: 'Monaco', monospace;
+        }
+        .remove-shop-btn {
+            background: white;
+            border: 2px solid #F77F87;
+            color: #F77F87;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .remove-shop-btn:hover {
+            background: #F77F87;
+            color: white;
+        }
+        .add-shop-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Monaco', monospace;
+            margin-bottom: 16px;
+        }
+        .add-shop-input:focus {
+            outline: none;
+            border-color: #4CB963;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .modal-btn.cancel {
+            background: #f3f4f6;
+            color: #525252;
+        }
+        .modal-btn.primary {
+            background: #4CB963;
+            color: white;
+        }
+        .modal-btn:hover {
+            transform: translateY(-1px);
+        }
+        .modal-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .empty-shops {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a3a3a3;
+        }
+        .empty-shops-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .notes-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 16px;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+        }
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #4CB963;
+        }
+        .notes-hint {
+            font-size: 12px;
+            color: #a3a3a3;
+            margin-top: 8px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -616,6 +744,48 @@
         </div>
     </div>
 
+    <!-- Manage Shops Modal -->
+    <div id="shops-modal" class="modal-overlay" style="display: none;" onclick="closeShopsModal(event)">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
+            <h2>🏪 Manage Shops</h2>
+            <p style="font-size: 14px; color: #737373; margin-bottom: 20px;">
+                <span id="shops-modal-email"></span><br>
+                <span id="shops-modal-code" style="font-family: monospace; font-size: 12px;"></span>
+            </p>
+            
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">Registered Shops:</h3>
+                <div id="shops-list"></div>
+            </div>
+            
+            <div style="border-top: 2px solid #f0f0f0; padding-top: 20px;">
+                <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 12px;">Add New Shop:</h3>
+                <input type="text" id="new-shop-input" class="add-shop-input" placeholder="shop.tekmetric.com/shop/12345">
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeShopsModal()">Close</button>
+                <button class="modal-btn primary" id="add-shop-btn" onclick="addShop()">Add Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Notes Modal -->
+    <div id="notes-modal" class="modal-overlay" style="display: none;" onclick="closeNotesModal(event)">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
+            <h2>📝 Customer Notes</h2>
+            <p style="font-size: 14px; color: #737373; margin-bottom: 20px;" id="notes-modal-email"></p>
+            
+            <textarea id="notes-textarea" class="notes-textarea" placeholder="Add notes about this customer..."></textarea>
+            <div class="notes-hint">💡 Tip: Add timestamps for context (e.g., "2025-10-29: Called customer...")</div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn cancel" onclick="closeNotesModal()">Cancel</button>
+                <button class="modal-btn primary" id="save-notes-btn" onclick="saveNotes()">Save Notes</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = 'https://guava-backend-v2.jolly-wind-0885.workers.dev';
         
@@ -723,16 +893,25 @@
                 
                 const row = tbody.insertRow();
                 
-                // Format registered shops as clickable links
-                let registeredShopsHTML = '-';
-                if (license.registered_shops) {
-                    const shops = license.registered_shops.split(',').filter(s => s.trim());
-                    registeredShopsHTML = shops.map(shop => {
-                        const cleanShop = shop.trim();
-                        const url = cleanShop.startsWith('http') ? cleanShop : `https://${cleanShop}`;
-                        return `<a href="${url}" target="_blank" style="color: #4CB963; text-decoration: none;">${cleanShop.replace('shop.tekmetric.com/shop/', 'Shop ')}</a>`;
-                    }).join('<br>');
+                // Format registered shops as clickable cell
+                const shopsCount = license.registered_shops 
+                    ? license.registered_shops.split(',').filter(s => s.trim()).length 
+                    : 0;
+                let registeredShopsHTML;
+                if (shopsCount === 0) {
+                    registeredShopsHTML = `<span class="clickable-cell empty" onclick="openShopsModal('${license.email}', '${license.activation_code}')">None</span>`;
+                } else if (shopsCount === 1) {
+                    registeredShopsHTML = `<span class="clickable-cell" onclick="openShopsModal('${license.email}', '${license.activation_code}')">${shopsCount} shop</span>`;
+                } else {
+                    registeredShopsHTML = `<span class="clickable-cell" onclick="openShopsModal('${license.email}', '${license.activation_code}')">${shopsCount} shops</span>`;
                 }
+                
+                // Format notes as clickable cell
+                const notesPreview = license.notes && license.notes.trim() 
+                    ? (license.notes.length > 20 ? license.notes.substring(0, 20) + '...' : license.notes)
+                    : '-';
+                const notesClass = license.notes && license.notes.trim() ? 'clickable-cell notes-cell' : 'clickable-cell notes-cell empty';
+                const notesHTML = `<span class="${notesClass}" onclick="openNotesModal('${license.email}', '${license.activation_code}')">${notesPreview}</span>`;
                 
                 row.innerHTML = `
                     <td>${statusDot}</td>
@@ -749,7 +928,7 @@
                     <td>${formatRelativeTime(license.created_at)}</td>
                     <td>${formatExpires(license.expires_at)}</td>
                     <td><code onclick="copyCode('${license.activation_code}')" title="Click to copy">${license.activation_code.substring(0, 10)}...</code></td>
-                    <td style="font-size: 12px; max-width: 150px; word-wrap: break-word;">${license.notes || '-'}</td>
+                    <td style="font-size: 12px; max-width: 150px; word-wrap: break-word;">${notesHTML}</td>
                 `;
             });
         }
@@ -845,6 +1024,206 @@
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
+        }
+        
+        // ========================================
+        // MANAGE SHOPS MODAL
+        // ========================================
+        
+        let currentLicenseEmail = '';
+        let currentLicenseCode = '';
+        
+        function openShopsModal(email, activationCode) {
+            currentLicenseEmail = email;
+            currentLicenseCode = activationCode;
+            
+            document.getElementById('shops-modal-email').textContent = email;
+            document.getElementById('shops-modal-code').textContent = activationCode;
+            document.getElementById('new-shop-input').value = '';
+            
+            // Find license data
+            const license = allLicenses.find(l => l.activation_code === activationCode);
+            
+            // Display shops list
+            const shopsList = document.getElementById('shops-list');
+            if (license && license.registered_shops && license.registered_shops.trim()) {
+                const shops = license.registered_shops.split(',').filter(s => s.trim());
+                shopsList.innerHTML = shops.map(shop => {
+                    const cleanShop = shop.trim();
+                    return `
+                        <div class="shop-card">
+                            <div class="shop-url">${cleanShop}</div>
+                            <button class="remove-shop-btn" onclick="removeShop('${cleanShop}')">Unregister</button>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                shopsList.innerHTML = `
+                    <div class="empty-shops">
+                        <div class="empty-shops-icon">🏪</div>
+                        <p>No shops registered yet</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('shops-modal').style.display = 'flex';
+        }
+        
+        function closeShopsModal(event) {
+            if (event && event.target.id !== 'shops-modal') return;
+            document.getElementById('shops-modal').style.display = 'none';
+            loadLicenses(); // Refresh data
+        }
+        
+        async function addShop() {
+            const input = document.getElementById('new-shop-input');
+            let shopUrl = input.value.trim();
+            
+            if (!shopUrl) {
+                showToast('❌ Please enter a shop URL');
+                return;
+            }
+            
+            // Auto-format if user just enters the shop number
+            if (/^\d+$/.test(shopUrl)) {
+                shopUrl = `shop.tekmetric.com/shop/${shopUrl}`;
+            }
+            
+            // Validate format
+            if (!shopUrl.includes('shop.tekmetric.com/shop/')) {
+                showToast('❌ Invalid shop URL format');
+                return;
+            }
+            
+            const btn = document.getElementById('add-shop-btn');
+            btn.disabled = true;
+            btn.textContent = 'Adding...';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/update-shops`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        activationCode: currentLicenseCode,
+                        action: 'add',
+                        shopUrl: shopUrl
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add shop');
+                }
+                
+                showToast('✅ Shop added successfully');
+                input.value = '';
+                
+                // Refresh modal
+                setTimeout(() => {
+                    openShopsModal(currentLicenseEmail, currentLicenseCode);
+                }, 500);
+                
+            } catch (error) {
+                showToast('❌ Error: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Add Shop';
+            }
+        }
+        
+        async function removeShop(shopUrl) {
+            if (!confirm(`Remove ${shopUrl} from this license?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/api/update-shops`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        activationCode: currentLicenseCode,
+                        action: 'remove',
+                        shopUrl: shopUrl
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to remove shop');
+                }
+                
+                showToast('✅ Shop removed successfully');
+                
+                // Refresh modal
+                setTimeout(() => {
+                    openShopsModal(currentLicenseEmail, currentLicenseCode);
+                }, 500);
+                
+            } catch (error) {
+                showToast('❌ Error: ' + error.message);
+            }
+        }
+        
+        // ========================================
+        // EDIT NOTES MODAL
+        // ========================================
+        
+        function openNotesModal(email, activationCode) {
+            currentLicenseEmail = email;
+            currentLicenseCode = activationCode;
+            
+            document.getElementById('notes-modal-email').textContent = email;
+            
+            // Find license data
+            const license = allLicenses.find(l => l.activation_code === activationCode);
+            document.getElementById('notes-textarea').value = license?.notes || '';
+            
+            document.getElementById('notes-modal').style.display = 'flex';
+        }
+        
+        function closeNotesModal(event) {
+            if (event && event.target.id !== 'notes-modal') return;
+            document.getElementById('notes-modal').style.display = 'none';
+        }
+        
+        async function saveNotes() {
+            const notes = document.getElementById('notes-textarea').value.trim();
+            
+            const btn = document.getElementById('save-notes-btn');
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+            
+            try {
+                const response = await fetch(`${API_URL}/api/update-notes`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        activationCode: currentLicenseCode,
+                        notes: notes
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save notes');
+                }
+                
+                showToast('✅ Notes saved successfully');
+                closeNotesModal();
+                loadLicenses(); // Refresh data
+                
+            } catch (error) {
+                showToast('❌ Error: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Notes';
+            }
         }
     </script>
 </body>
