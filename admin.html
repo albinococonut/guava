@@ -576,11 +576,15 @@
                     <th class="sortable" data-column="license_count" onclick="sortTable('license_count')">Licenses</th>
                     <th class="sortable" data-column="shop_name" onclick="sortTable('shop_name')">Shop Name</th>
                     <th class="sortable" data-column="phone_number" onclick="sortTable('phone_number')">Phone</th>
+                    <th class="sortable" data-column="amount_paid" onclick="sortTable('amount_paid')">Amount Paid</th>
+                    <th class="sortable" data-column="term" onclick="sortTable('term')">Term</th>
+                    <th data-column="registered_shops">Registered Shops</th>
                     <th class="sortable" data-column="validation_count" onclick="sortTable('validation_count')">Usage Count</th>
                     <th class="sortable" data-column="last_validated" onclick="sortTable('last_validated')">Last Used</th>
                     <th class="sortable" data-column="created_at" onclick="sortTable('created_at')">Created</th>
                     <th class="sortable" data-column="expires_at" onclick="sortTable('expires_at')">Expires</th>
                     <th data-column="activation_code">Activation Code</th>
+                    <th data-column="notes">Notes</th>
                 </tr>
             </thead>
             <tbody id="licenses-body"></tbody>
@@ -712,6 +716,18 @@
                 const licenseBadge = `<span class="license-badge ${licenseBadgeClass}">${registeredCount}/${totalLicenses}</span>`;
                 
                 const row = tbody.insertRow();
+                
+                // Format registered shops as clickable links
+                let registeredShopsHTML = '-';
+                if (license.registered_shops) {
+                    const shops = license.registered_shops.split(',').filter(s => s.trim());
+                    registeredShopsHTML = shops.map(shop => {
+                        const cleanShop = shop.trim();
+                        const url = cleanShop.startsWith('http') ? cleanShop : `https://${cleanShop}`;
+                        return `<a href="${url}" target="_blank" style="color: #4CB963; text-decoration: none;">${cleanShop.replace('shop.tekmetric.com/shop/', 'Shop ')}</a>`;
+                    }).join('<br>');
+                }
+                
                 row.innerHTML = `
                     <td>${statusDot}</td>
                     <td><strong>${license.customer_name || '-'}</strong></td>
@@ -719,11 +735,15 @@
                     <td>${licenseBadge}</td>
                     <td>${license.shop_name || '-'}</td>
                     <td>${license.phone_number || '-'}</td>
+                    <td><strong>$${license.amount_paid || '-'}</strong></td>
+                    <td>${license.term || '-'}</td>
+                    <td style="font-size: 12px;">${registeredShopsHTML}</td>
                     <td><strong>${license.validation_count || 0}</strong></td>
                     <td>${formatRelativeTime(license.last_validated)}</td>
                     <td>${formatRelativeTime(license.created_at)}</td>
                     <td>${formatExpires(license.expires_at)}</td>
                     <td><code onclick="copyCode('${license.activation_code}')" title="Click to copy">${license.activation_code.substring(0, 10)}...</code></td>
+                    <td style="font-size: 12px; max-width: 150px; word-wrap: break-word;">${license.notes || '-'}</td>
                 `;
             });
         }
