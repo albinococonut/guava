@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guava License Admin</title>
-    <link rel="icon" type="image/png" href="/icon128.png">
+    <link rel="icon" type="image/png" href="/guava-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -494,7 +494,7 @@
 </head>
 <body>
     <div id="auth-form" class="auth-form">
-        <img src="/icon128.png" alt="Guava" class="logo">
+        <img src="/guava-logo.png" alt="Guava" class="logo">
         <h1>Guava Admin</h1>
         <p class="tagline">Crack the Guava, Unlock the Sale</p>
         <input type="password" id="password" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') login()">
@@ -504,7 +504,7 @@
 
     <div id="admin-panel">
         <div class="header">
-            <img src="/icon128.png" alt="Guava" class="logo">
+            <img src="/guava-logo.png" alt="Guava" class="logo">
             <h1 style="display: inline-block; vertical-align: middle;">Guava License Dashboard</h1>
             <p class="tagline">Manage your automotive service advisor licenses</p>
         </div>
@@ -626,20 +626,24 @@
                 document.getElementById('error').style.display = 'none';
                 document.getElementById('empty-state').style.display = 'none';
                 document.getElementById('licenses-table').style.display = 'none';
+                document.getElementById('pagination').style.display = 'none';
                 
                 const response = await fetch(`${API_URL}/admin/licenses`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
 
                 if (response.status === 401) {
-                    document.getElementById('auth-error').textContent = 'Invalid password';
+                    // Wrong password - stay on login screen
+                    document.getElementById('auth-error').textContent = '❌ Invalid password. Please try again.';
                     document.getElementById('auth-error').style.display = 'block';
                     document.getElementById('loading').style.display = 'none';
+                    document.getElementById('auth-form').style.display = 'block';
+                    document.getElementById('admin-panel').style.display = 'none';
                     return;
                 }
 
                 if (!response.ok) {
-                    throw new Error('Failed to load licenses');
+                    throw new Error('Failed to load licenses: ' + response.statusText);
                 }
 
                 allLicenses = await response.json();
