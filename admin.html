@@ -329,6 +329,17 @@
             background: #ff9800;
         }
         
+        .health-warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 6px;
+        }
+        
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -512,6 +523,9 @@
         .clickable-cell.notes-cell:hover::after {
             content: ' 📝';
         }
+        .clickable-cell.email-cell:hover::after {
+            content: ' 📋';
+        }
         .clickable-cell.empty {
             color: #a3a3a3;
             font-style: italic;
@@ -668,7 +682,7 @@
         </div>
 
         <div class="search-box">
-            <input type="text" id="search" placeholder="🔍 Search by email, customer name, or shop name..." 
+            <input type="text" id="search" placeholder="🔍 Search by email, name, shop, phone, or activation code..." 
                    oninput="searchLicenses(this.value)">
             <div class="table-controls">
                 <button class="control-btn" onclick="exportToCSV()">
@@ -888,8 +902,20 @@
                 
                 const statusDot = `<span class="status-dot ${license.status}"></span>`;
                 
+                // IMPROVEMENT #1: Fixed badge color logic
                 const licenseBadgeClass = registeredCount < totalLicenses ? 'warning' : '';
                 const licenseBadge = `<span class="license-badge ${licenseBadgeClass}">${registeredCount}/${totalLicenses}</span>`;
+                
+                // IMPROVEMENT #4: Customer health warning (hasn't used in 30+ days despite active license)
+                let healthWarning = '';
+                if (license.status === 'active' && license.validation_count === 0) {
+                    const createdDate = new Date(license.created_at);
+                    const now = new Date();
+                    const daysSinceCreated = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+                    if (daysSinceCreated >= 30) {
+                        healthWarning = '<span class="health-warning" title="Active for 30+ days but never used">⚠️ Inactive</span>';
+                    }
+                }
                 
                 const row = tbody.insertRow();
                 
@@ -913,10 +939,13 @@
                 const notesClass = license.notes && license.notes.trim() ? 'clickable-cell notes-cell' : 'clickable-cell notes-cell empty';
                 const notesHTML = `<span class="${notesClass}" onclick="openNotesModal('${license.email}', '${license.activation_code}')">${notesPreview}</span>`;
                 
+                // IMPROVEMENT #2: Make email clickable to copy
+                const emailHTML = `<span class="clickable-cell email-cell" onclick="copyEmail('${license.email}')" title="Click to copy">${license.email}</span>`;
+                
                 row.innerHTML = `
                     <td>${statusDot}</td>
-                    <td><strong>${license.customer_name || '-'}</strong></td>
-                    <td>${license.email}</td>
+                    <td><strong>${license.customer_name || '-'}</strong>${healthWarning}</td>
+                    <td>${emailHTML}</td>
                     <td>${licenseBadge}</td>
                     <td>${license.shop_name || '-'}</td>
                     <td>${license.phone_number || '-'}</td>
@@ -957,6 +986,7 @@
             displayLicenses(filtered);
         }
 
+        // IMPROVEMENT #3: Enhanced search to include activation code and phone
         async function searchLicenses(query) {
             if (!query.trim()) {
                 filterByStatus(currentFilter);
@@ -968,6 +998,7 @@
                 l.email.toLowerCase().includes(searchTerm) ||
                 (l.customer_name && l.customer_name.toLowerCase().includes(searchTerm)) ||
                 (l.shop_name && l.shop_name.toLowerCase().includes(searchTerm)) ||
+                (l.phone_number && l.phone_number.toLowerCase().includes(searchTerm)) ||
                 l.activation_code.toLowerCase().includes(searchTerm)
             );
             
@@ -1017,6 +1048,12 @@
             showToast('Activation code copied!');
         }
 
+        // IMPROVEMENT #2: Copy email function
+        function copyEmail(email) {
+            navigator.clipboard.writeText(email);
+            showToast('Email copied!');
+        }
+
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -1024,6 +1061,47 @@
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
+        }
+
+        // IMPROVEMENT #1: Fixed CSV export function
+        function exportToCSV() {
+            const headers = ['Status', 'Customer Name', 'Email', 'Licenses', 'Shop Name', 'Phone', 'Amount Paid', 'Term', 'Registered Shops', 'Usage Count', 'Last Used', 'Created', 'Expires', 'Activation Code', 'Notes'];
+            
+            const rows = allLicenses.map(license => {
+                const registeredCount = license.registered_shops 
+                    ? license.registered_shops.split(',').filter(s => s.trim()).length 
+                    : 0;
+                const totalLicenses = license.license_count || 1;
+                
+                return [
+                    license.status || '',
+                    license.customer_name || '',
+                    license.email || '',
+                    `${registeredCount}/${totalLicenses}`,
+                    license.shop_name || '',
+                    license.phone_number || '',
+                    license.amount_paid || '',
+                    license.term || '',
+                    license.registered_shops || '',
+                    license.validation_count || 0,
+                    license.last_validated || 'Never',
+                    license.created_at || '',
+                    license.expires_at || '',
+                    license.activation_code || '',
+                    (license.notes || '').replace(/"/g, '""') // Escape quotes in notes
+                ].map(cell => `"${cell}"`).join(',');
+            });
+            
+            const csv = [headers.join(','), ...rows].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `guava-licenses-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('✅ CSV exported successfully!');
         }
         
         // ========================================
