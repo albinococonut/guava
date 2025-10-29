@@ -313,8 +313,10 @@
                 <tr>
                     <th>Activation Code</th>
                     <th>Email</th>
+                    <th>Customer Name</th>
                     <th>Shop Name</th>
                     <th>Phone</th>
+                    <th>Licenses</th>
                     <th>Status</th>
                     <th>Created</th>
                     <th>Expires</th>
@@ -400,8 +402,10 @@
                 row.innerHTML = `
                     <td><code>${license.activation_code}</code></td>
                     <td>${license.email}</td>
+                    <td>${license.customer_name || '-'}</td>
                     <td>${license.shop_name || '-'}</td>
                     <td>${license.phone_number || '-'}</td>
+                    <td><strong>${license.license_count || 1}</strong></td>
                     <td><span class="status ${license.status}">${license.status}</span></td>
                     <td>${formatDate(license.created_at)}</td>
                     <td>${license.expires_at ? formatDate(license.expires_at) : 'Never'}</td>
