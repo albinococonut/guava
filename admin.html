@@ -299,6 +299,7 @@
                     <th>Activation Code</th>
                     <th>Email</th>
                     <th>Shop Name</th>
+                    <th>Phone</th>
                     <th>Status</th>
                     <th>Created</th>
                     <th>Expires</th>
@@ -385,6 +386,7 @@
                     <td><code>${license.activation_code}</code></td>
                     <td>${license.email}</td>
                     <td>${license.shop_name || '-'}</td>
+                    <td>${license.phone_number || '-'}</td>
                     <td><span class="status ${license.status}">${license.status}</span></td>
                     <td>${formatDate(license.created_at)}</td>
                     <td>${license.expires_at ? formatDate(license.expires_at) : 'Never'}</td>
