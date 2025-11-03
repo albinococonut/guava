@@ -1928,11 +1928,11 @@ document.getElementById('nameForm').addEventListener('submit', function(e) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: userEmail,
-            firstName: firstName,
-            source: source,
-            timestamp: new Date().toISOString()
-        })
+    Email: userEmail,
+    "First Name": firstName,
+    Source: source,
+    Timestamp: new Date().toISOString()
+})
     });
     
     // Close immediately, don't wait for webhook
