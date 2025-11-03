@@ -1921,18 +1921,20 @@ document.getElementById('nameForm').addEventListener('submit', function(e) {
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get('source') || 'Website';
     
+    // Create form data (avoids CORS)
+    const formData = new URLSearchParams();
+    formData.append('Email Address', userEmail);
+    formData.append('First Name', firstName);
+    formData.append('Source', source);
+    formData.append('Timestamp', new Date().toISOString());
+    
     // Send to Zapier webhook
-   fetch('https://hooks.zapier.com/hooks/catch/25016581/usoeb8i/', {
-    method: 'POST',
-    body: JSON.stringify({
-        "Email Address": userEmail,
-        "First Name": firstName,
-        "Source": source,
-        "Timestamp": new Date().toISOString()
-    })
+    fetch('https://hooks.zapier.com/hooks/catch/25016581/usoeb8i/', {
+        method: 'POST',
+        body: formData
     });
     
-    // Close immediately, don't wait for webhook
+    // Close immediately
     closeLeadPopup();
 });
 </script>
