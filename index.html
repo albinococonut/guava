@@ -1886,7 +1886,7 @@ document.getElementById('semaForm').addEventListener('submit', function(e) {
     const email = this.querySelector('input[type="email"]').value;
     
     // Send to Zapier webhook
-    fetch('YOUR_ZAPIER_WEBHOOK_URL_HERE', {
+    fetch('https://hooks.zapier.com/hooks/catch/25016581/usoeb8i/', {
         method: 'POST',
         body: JSON.stringify({
             email: email,
