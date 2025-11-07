@@ -457,22 +457,22 @@
     
     <script>
         async function loadCustomerId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get('session_id');
-            
-            if (!sessionId) {
-                document.getElementById('licenseKey').textContent = 'ERROR: No session ID found';
-                return;
-            }
-            
-            document.getElementById('licenseKey').textContent = 'Loading...';
-            
-            try {
-                const response = await fetch('https://guava-backend.jolly-wind-0885.workers.dev/get-customer-id', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ session_id: sessionId })
-                });
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+    
+    if (!sessionId) {
+        document.getElementById('licenseKey').textContent = 'ERROR: No session ID found';
+        return;
+    }
+    
+    document.getElementById('licenseKey').textContent = 'Loading...';
+    
+    try {
+        const response = await fetch('https://guava-backend-staging.jolly-wind-0885.workers.dev/get-customer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: sessionId })
+        });
                 
                 const result = await response.json();
                 
