@@ -1006,10 +1006,11 @@
         }
 
         function formatRelativeTime(dateString) {
-            if (!dateString) return '<span style="color: #999;">Never</span>';
-            
-            // Add 'Z' to force UTC parsing if not already present
-            const utcString = dateString.endsWith('Z') ? dateString : dateString + 'Z';
+    if (!dateString) return '<span style="color: #999;">Never</span>';
+    
+    // Convert to string and add 'Z' to force UTC parsing if not already present
+    const dateStr = String(dateString);
+    const utcString = dateStr.endsWith('Z') ? dateStr : dateStr + 'Z';
             const date = new Date(utcString);
             const now = new Date();
             const diffMs = now - date;
@@ -1027,10 +1028,11 @@
         }
 
         function formatExpires(dateString) {
-            if (!dateString) return '<span class="never-expires">Never</span>';
-            
-            // Add 'Z' to force UTC parsing if not already present
-            const utcString = dateString.endsWith('Z') ? dateString : dateString + 'Z';
+    if (!dateString) return '<span class="never-expires">Never</span>';
+    
+    // Convert to string and add 'Z' to force UTC parsing if not already present
+    const dateStr = String(dateString);
+    const utcString = dateStr.endsWith('Z') ? dateStr : dateStr + 'Z';
             const date = new Date(utcString);
             const now = new Date();
             const diffMs = date - now;
