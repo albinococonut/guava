@@ -607,6 +607,8 @@
                     <th class="sortable" data-column="status" onclick="sortTable('status')">Status</th>
                     <th class="sortable" data-column="customer_name" onclick="sortTable('customer_name')">Customer</th>
                     <th class="sortable" data-column="email" onclick="sortTable('email')">Email</th>
+                    <th class="sortable" data-column="shop_name" onclick="sortTable('shop_name')">Shop Name</th>
+                    <th class="sortable" data-column="phone_number" onclick="sortTable('phone_number')">Phone</th>
                     <th class="sortable" data-column="license_count" onclick="sortTable('license_count')">Licenses</th>
                     <th class="sortable" data-column="amount_paid" onclick="sortTable('amount_paid')">Amount</th>
                     <th class="sortable" data-column="term" onclick="sortTable('term')">Term</th>
@@ -791,6 +793,8 @@
                     <td>${statusBadge}</td>
                     <td><strong>${license.customer_name || '-'}</strong></td>
                     <td>${emailHTML}</td>
+                    <td>${license.shop_name || '-'}</td>
+                    <td>${license.phone_number || '-'}</td>
                     <td>${licenseBadge}</td>
                     <td><strong>$${license.amount_paid || '-'}</strong></td>
                     <td>${license.term || '-'}</td>
@@ -894,7 +898,7 @@
         }
 
         function exportToCSV() {
-            const headers = ['Status', 'Customer', 'Email', 'Licenses', 'Amount', 'Term', 'Shops', 'Created', 'Expires', 'Code', 'Notes'];
+            const headers = ['Status', 'Customer', 'Email', 'Shop Name', 'Phone', 'Licenses', 'Amount', 'Term', 'Shops', 'Created', 'Expires', 'Code', 'Notes'];
             
             const rows = allLicenses.map(license => {
                 const registeredCount = license.registered_shops 
@@ -906,6 +910,8 @@
                     license.status || '',
                     license.customer_name || '',
                     license.email || '',
+                    license.shop_name || '',
+                    license.phone_number || '',
                     `${registeredCount}/${totalLicenses}`,
                     license.amount_paid || '',
                     license.term || '',
