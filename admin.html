@@ -173,62 +173,6 @@
             color: #4CB963;
         }
         
-        .pagination {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .pagination-info {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .pagination-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .page-btn {
-            background: white;
-            border: 2px solid #e0e0e0;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.2s;
-        }
-        .page-btn:hover:not(:disabled) {
-            border-color: #4CB963;
-            color: #4CB963;
-        }
-        .page-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-        .page-btn.active {
-            background: #4CB963;
-            color: white;
-            border-color: #4CB963;
-        }
-        
-        .per-page-select {
-            padding: 8px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #666;
-            cursor: pointer;
-        }
-        
         .table-wrapper {
             overflow-x: auto;
             background: white;
@@ -299,21 +243,25 @@
             background: #e0e0e0;
         }
         
-        .status-dot {
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 11px;
             display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 6px;
+            text-transform: uppercase;
         }
-        .status-dot.active {
+        .status-badge.active {
             background: #4CB963;
+            color: white;
         }
-        .status-dot.expired {
+        .status-badge.expired {
             background: #dc3545;
+            color: white;
         }
-        .status-dot.cancelled {
+        .status-badge.cancelled {
             background: #6c757d;
+            color: white;
         }
         
         .license-badge {
@@ -327,17 +275,6 @@
         }
         .license-badge.warning {
             background: #ff9800;
-        }
-        
-        .health-warning {
-            background: #fff3cd;
-            color: #856404;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-            margin-left: 6px;
         }
         
         .stats {
@@ -426,10 +363,6 @@
             color: #dc3545;
             font-weight: 600;
         }
-        .never-expires {
-            color: #999;
-            font-style: italic;
-        }
         
         .toast {
             position: fixed;
@@ -474,39 +407,7 @@
             margin-bottom: 20px;
             font-family: 'Poppins', sans-serif;
         }
-        .column-toggle {
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .column-toggle:last-child {
-            border-bottom: none;
-        }
-        .column-toggle input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-        .column-toggle label {
-            flex: 1;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        .modal-close {
-            margin-top: 20px;
-            width: 100%;
-            padding: 12px;
-            background: #4CB963;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-        }
         
-        /* Clickable column styles */
         .clickable-cell {
             cursor: pointer;
             transition: all 0.2s;
@@ -531,7 +432,6 @@
             font-style: italic;
         }
         
-        /* Shop management modal */
         .shop-card {
             background: #f7fafc;
             border: 1px solid #e5e5e5;
@@ -669,10 +569,6 @@
                 <h3>Expired</h3>
                 <div class="number" id="stat-expired" style="color: #dc3545;">-</div>
             </div>
-            <div class="stat-card">
-                <h3>Total Validations</h3>
-                <div class="number" id="stat-validations">-</div>
-            </div>
         </div>
 
         <div class="filter-tabs">
@@ -682,21 +578,12 @@
         </div>
 
         <div class="search-box">
-            <input type="text" id="search" placeholder="🔍 Search by email, name, shop, phone, or activation code..." 
+            <input type="text" id="search" placeholder="🔍 Search by email, name, or activation code..." 
                    oninput="searchLicenses(this.value)">
             <div class="table-controls">
                 <button class="control-btn" onclick="exportToCSV()">
                     📊 Export CSV
                 </button>
-                <button class="control-btn" onclick="openColumnSettings()">
-                    ⚙️ Columns
-                </button>
-                <select class="per-page-select" id="per-page" onchange="changePerPage()">
-                    <option value="25">Show 25</option>
-                    <option value="50">Show 50</option>
-                    <option value="100">Show 100</option>
-                    <option value="all">Show All</option>
-                </select>
                 <button class="refresh-btn" onclick="loadLicenses()">↻ Refresh</button>
             </div>
         </div>
@@ -710,7 +597,7 @@
                 <path d="M7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
             </svg>
             <h3>No licenses found</h3>
-            <p>Create your first license through Stripe + Zapier</p>
+            <p>Licenses will appear here once customers purchase</p>
         </div>
         
         <div class="table-wrapper">
@@ -718,45 +605,24 @@
             <thead>
                 <tr>
                     <th class="sortable" data-column="status" onclick="sortTable('status')">Status</th>
-                    <th class="sortable" data-column="customer_name" onclick="sortTable('customer_name')">Customer Name</th>
+                    <th class="sortable" data-column="customer_name" onclick="sortTable('customer_name')">Customer</th>
                     <th class="sortable" data-column="email" onclick="sortTable('email')">Email</th>
                     <th class="sortable" data-column="license_count" onclick="sortTable('license_count')">Licenses</th>
-                    <th class="sortable" data-column="shop_name" onclick="sortTable('shop_name')">Shop Name</th>
-                    <th class="sortable" data-column="phone_number" onclick="sortTable('phone_number')">Phone</th>
-                    <th class="sortable" data-column="amount_paid" onclick="sortTable('amount_paid')">Amount Paid</th>
+                    <th class="sortable" data-column="amount_paid" onclick="sortTable('amount_paid')">Amount</th>
                     <th class="sortable" data-column="term" onclick="sortTable('term')">Term</th>
-                    <th data-column="registered_shops">Registered Shops</th>
-                    <th class="sortable" data-column="validation_count" onclick="sortTable('validation_count')">Usage Count</th>
-                    <th class="sortable" data-column="last_validated" onclick="sortTable('last_validated')">Last Used</th>
+                    <th data-column="registered_shops">Shops</th>
                     <th class="sortable" data-column="created_at" onclick="sortTable('created_at')">Created</th>
                     <th class="sortable" data-column="expires_at" onclick="sortTable('expires_at')">Expires</th>
-                    <th data-column="activation_code">Activation Code</th>
+                    <th data-column="activation_code">Code</th>
                     <th data-column="notes">Notes</th>
                 </tr>
             </thead>
             <tbody id="licenses-body"></tbody>
         </table>
         </div>
-
-        <div id="pagination" class="pagination" style="display: none;">
-            <div class="pagination-info" id="pagination-info">Showing 1-25 of 100</div>
-            <div class="pagination-controls">
-                <button class="page-btn" id="prev-btn" onclick="changePage(-1)">← Previous</button>
-                <span id="page-numbers"></span>
-                <button class="page-btn" id="next-btn" onclick="changePage(1)">Next →</button>
-            </div>
-        </div>
     </div>
 
     <div id="toast" class="toast"></div>
-
-    <div id="column-modal" class="modal-overlay" onclick="closeColumnSettings(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-            <h2>Show/Hide Columns</h2>
-            <div id="column-toggles"></div>
-            <button class="modal-close" onclick="closeColumnSettings()">Done</button>
-        </div>
-    </div>
 
     <!-- Manage Shops Modal -->
     <div id="shops-modal" class="modal-overlay" style="display: none;" onclick="closeShopsModal(event)">
@@ -791,7 +657,7 @@
             <p style="font-size: 14px; color: #737373; margin-bottom: 20px;" id="notes-modal-email"></p>
             
             <textarea id="notes-textarea" class="notes-textarea" placeholder="Add notes about this customer..."></textarea>
-            <div class="notes-hint">💡 Tip: Add timestamps for context (e.g., "2025-10-29: Called customer...")</div>
+            <div class="notes-hint">💡 Tip: Add timestamps for context</div>
             
             <div class="modal-actions">
                 <button class="modal-btn cancel" onclick="closeNotesModal()">Cancel</button>
@@ -807,7 +673,6 @@
         let allLicenses = [];
         let currentFilter = 'all';
 
-        // Check for saved login on page load
         window.addEventListener('DOMContentLoaded', function() {
             const savedToken = localStorage.getItem('guava_admin_token');
             if (savedToken) {
@@ -819,10 +684,7 @@
         function login() {
             const password = document.getElementById('password').value;
             authToken = password;
-            
-            // Save token to localStorage
             localStorage.setItem('guava_admin_token', password);
-            
             document.getElementById('auth-error').style.display = 'none';
             loadLicenses();
         }
@@ -841,15 +703,13 @@
                 document.getElementById('error').style.display = 'none';
                 document.getElementById('empty-state').style.display = 'none';
                 document.getElementById('licenses-table').style.display = 'none';
-                document.getElementById('pagination').style.display = 'none';
                 
                 const response = await fetch(`${API_URL}/admin/licenses`, {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
 
                 if (response.status === 401) {
-                    // Wrong password - stay on login screen
-                    document.getElementById('auth-error').textContent = '❌ Invalid password. Please try again.';
+                    document.getElementById('auth-error').textContent = '❌ Invalid password';
                     document.getElementById('auth-error').style.display = 'block';
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('auth-form').style.display = 'block';
@@ -858,7 +718,7 @@
                 }
 
                 if (!response.ok) {
-                    throw new Error('Failed to load licenses: ' + response.statusText);
+                    throw new Error('Failed to load licenses');
                 }
 
                 allLicenses = await response.json();
@@ -900,26 +760,13 @@
                     : 0;
                 const totalLicenses = license.license_count || 1;
                 
-                const statusDot = `<span class="status-dot ${license.status}"></span>`;
+                const statusBadge = `<span class="status-badge ${license.status}">${license.status}</span>`;
                 
-                // IMPROVEMENT #1: Fixed badge color logic
                 const licenseBadgeClass = registeredCount < totalLicenses ? 'warning' : '';
                 const licenseBadge = `<span class="license-badge ${licenseBadgeClass}">${registeredCount}/${totalLicenses}</span>`;
                 
-                // IMPROVEMENT #4: Customer health warning (hasn't used in 30+ days despite active license)
-                let healthWarning = '';
-                if (license.status === 'active' && license.validation_count === 0) {
-                    const createdDate = new Date(license.created_at);
-                    const now = new Date();
-                    const daysSinceCreated = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
-                    if (daysSinceCreated >= 30) {
-                        healthWarning = '<span class="health-warning" title="Active for 30+ days but never used">⚠️ Inactive</span>';
-                    }
-                }
-                
                 const row = tbody.insertRow();
                 
-                // Format registered shops as clickable cell
                 const shopsCount = license.registered_shops 
                     ? license.registered_shops.split(',').filter(s => s.trim()).length 
                     : 0;
@@ -932,32 +779,26 @@
                     registeredShopsHTML = `<span class="clickable-cell" onclick="openShopsModal('${license.email}', '${license.activation_code}')">${shopsCount} shops</span>`;
                 }
                 
-                // Format notes as clickable cell
                 const notesPreview = license.notes && license.notes.trim() 
-                    ? (license.notes.length > 20 ? license.notes.substring(0, 20) + '...' : license.notes)
+                    ? (license.notes.length > 15 ? license.notes.substring(0, 15) + '...' : license.notes)
                     : '-';
                 const notesClass = license.notes && license.notes.trim() ? 'clickable-cell notes-cell' : 'clickable-cell notes-cell empty';
                 const notesHTML = `<span class="${notesClass}" onclick="openNotesModal('${license.email}', '${license.activation_code}')">${notesPreview}</span>`;
                 
-                // IMPROVEMENT #2: Make email clickable to copy
                 const emailHTML = `<span class="clickable-cell email-cell" onclick="copyEmail('${license.email}')" title="Click to copy">${license.email}</span>`;
                 
                 row.innerHTML = `
-                    <td>${statusDot}</td>
-                    <td><strong>${license.customer_name || '-'}</strong>${healthWarning}</td>
+                    <td>${statusBadge}</td>
+                    <td><strong>${license.customer_name || '-'}</strong></td>
                     <td>${emailHTML}</td>
                     <td>${licenseBadge}</td>
-                    <td>${license.shop_name || '-'}</td>
-                    <td>${license.phone_number || '-'}</td>
                     <td><strong>$${license.amount_paid || '-'}</strong></td>
                     <td>${license.term || '-'}</td>
                     <td style="font-size: 12px;">${registeredShopsHTML}</td>
-                    <td><strong>${license.validation_count || 0}</strong></td>
-                    <td>${formatRelativeTime(license.last_validated)}</td>
                     <td>${formatRelativeTime(license.created_at)}</td>
                     <td>${formatExpires(license.expires_at)}</td>
-                    <td><code onclick="copyCode('${license.activation_code}')" title="Click to copy">${license.activation_code.substring(0, 10)}...</code></td>
-                    <td style="font-size: 12px; max-width: 150px; word-wrap: break-word;">${notesHTML}</td>
+                    <td><code onclick="copyCode('${license.activation_code}')" title="Click to copy">${license.activation_code.substring(0, 8)}...</code></td>
+                    <td style="font-size: 12px;">${notesHTML}</td>
                 `;
             });
         }
@@ -967,15 +808,11 @@
             document.getElementById('stat-active').textContent = 
                 licenses.filter(l => l.status === 'active').length;
             document.getElementById('stat-expired').textContent = 
-                licenses.filter(l => l.status === 'expired').length;
-            document.getElementById('stat-validations').textContent = 
-                licenses.reduce((sum, l) => sum + (l.validation_count || 0), 0);
+                licenses.filter(l => l.status === 'expired' || l.status === 'cancelled').length;
         }
 
         function filterByStatus(status) {
             currentFilter = status;
-            
-            // Update active tab
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             event?.target?.classList.add('active');
             
@@ -986,7 +823,6 @@
             displayLicenses(filtered);
         }
 
-        // IMPROVEMENT #3: Enhanced search to include activation code and phone
         async function searchLicenses(query) {
             if (!query.trim()) {
                 filterByStatus(currentFilter);
@@ -997,8 +833,6 @@
             const filtered = allLicenses.filter(l => 
                 l.email.toLowerCase().includes(searchTerm) ||
                 (l.customer_name && l.customer_name.toLowerCase().includes(searchTerm)) ||
-                (l.shop_name && l.shop_name.toLowerCase().includes(searchTerm)) ||
-                (l.phone_number && l.phone_number.toLowerCase().includes(searchTerm)) ||
                 l.activation_code.toLowerCase().includes(searchTerm)
             );
             
@@ -1006,42 +840,34 @@
         }
 
         function formatRelativeTime(dateString) {
-    if (!dateString) return '<span style="color: #999;">Never</span>';
-    
-    // Convert to string and add 'Z' to force UTC parsing if not already present
-    const dateStr = String(dateString);
-    const utcString = dateStr.endsWith('Z') ? dateStr : dateStr + 'Z';
-            const date = new Date(utcString);
+            if (!dateString) return '-';
+            
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return '-';
+            
             const now = new Date();
             const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
             const diffDays = Math.floor(diffMs / 86400000);
             
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
-            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-            if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`;
-            if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`;
-            return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) > 1 ? 's' : ''} ago`;
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+            if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
+            return `${Math.floor(diffDays / 365)} years ago`;
         }
 
         function formatExpires(dateString) {
-    if (!dateString) return '<span class="never-expires">Never</span>';
-    
-    // Convert to string and add 'Z' to force UTC parsing if not already present
-    const dateStr = String(dateString);
-    const utcString = dateStr.endsWith('Z') ? dateStr : dateStr + 'Z';
-            const date = new Date(utcString);
-            const now = new Date();
-            const diffMs = date - now;
-            const diffDays = Math.floor(diffMs / 86400000);
+            if (!dateString) return '-';
             
-            // Format the actual date
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return '-';
+            
+            const now = new Date();
+            const diffDays = Math.floor((date - now) / 86400000);
+            
             const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             
-            // Add warning styling if expired or expiring soon
             if (diffDays < 0) return `<span class="expired-text">${formattedDate}</span>`;
             if (diffDays < 7) return `<span class="expiring-soon">${formattedDate}</span>`;
             
@@ -1050,13 +876,12 @@
 
         function copyCode(code) {
             navigator.clipboard.writeText(code);
-            showToast('Activation code copied!');
+            showToast('✅ Activation code copied!');
         }
 
-        // IMPROVEMENT #2: Copy email function
         function copyEmail(email) {
             navigator.clipboard.writeText(email);
-            showToast('Email copied!');
+            showToast('✅ Email copied!');
         }
 
         function showToast(message) {
@@ -1068,9 +893,8 @@
             }, 3000);
         }
 
-        // IMPROVEMENT #1: Fixed CSV export function
         function exportToCSV() {
-            const headers = ['Status', 'Customer Name', 'Email', 'Licenses', 'Shop Name', 'Phone', 'Amount Paid', 'Term', 'Registered Shops', 'Usage Count', 'Last Used', 'Created', 'Expires', 'Activation Code', 'Notes'];
+            const headers = ['Status', 'Customer', 'Email', 'Licenses', 'Amount', 'Term', 'Shops', 'Created', 'Expires', 'Code', 'Notes'];
             
             const rows = allLicenses.map(license => {
                 const registeredCount = license.registered_shops 
@@ -1083,17 +907,13 @@
                     license.customer_name || '',
                     license.email || '',
                     `${registeredCount}/${totalLicenses}`,
-                    license.shop_name || '',
-                    license.phone_number || '',
                     license.amount_paid || '',
                     license.term || '',
                     license.registered_shops || '',
-                    license.validation_count || 0,
-                    license.last_validated || 'Never',
                     license.created_at || '',
                     license.expires_at || '',
                     license.activation_code || '',
-                    (license.notes || '').replace(/"/g, '""') // Escape quotes in notes
+                    (license.notes || '').replace(/"/g, '""')
                 ].map(cell => `"${cell}"`).join(',');
             });
             
@@ -1106,12 +926,8 @@
             a.click();
             URL.revokeObjectURL(url);
             
-            showToast('✅ CSV exported successfully!');
+            showToast('✅ CSV exported!');
         }
-        
-        // ========================================
-        // MANAGE SHOPS MODAL
-        // ========================================
         
         let currentLicenseEmail = '';
         let currentLicenseCode = '';
@@ -1124,10 +940,8 @@
             document.getElementById('shops-modal-code').textContent = activationCode;
             document.getElementById('new-shop-input').value = '';
             
-            // Find license data
             const license = allLicenses.find(l => l.activation_code === activationCode);
             
-            // Display shops list
             const shopsList = document.getElementById('shops-list');
             if (license && license.registered_shops && license.registered_shops.trim()) {
                 const shops = license.registered_shops.split(',').filter(s => s.trim());
@@ -1136,7 +950,7 @@
                     return `
                         <div class="shop-card">
                             <div class="shop-url">${cleanShop}</div>
-                            <button class="remove-shop-btn" onclick="removeShop('${cleanShop}')">Unregister</button>
+                            <button class="remove-shop-btn" onclick="removeShop('${cleanShop}')">Remove</button>
                         </div>
                     `;
                 }).join('');
@@ -1144,7 +958,7 @@
                 shopsList.innerHTML = `
                     <div class="empty-shops">
                         <div class="empty-shops-icon">🏪</div>
-                        <p>No shops registered yet</p>
+                        <p>No shops registered</p>
                     </div>
                 `;
             }
@@ -1155,7 +969,7 @@
         function closeShopsModal(event) {
             if (event && event.target.id !== 'shops-modal') return;
             document.getElementById('shops-modal').style.display = 'none';
-            loadLicenses(); // Refresh data
+            loadLicenses();
         }
         
         async function addShop() {
@@ -1167,12 +981,10 @@
                 return;
             }
             
-            // Auto-format if user just enters the shop number
             if (/^\d+$/.test(shopUrl)) {
                 shopUrl = `shop.tekmetric.com/shop/${shopUrl}`;
             }
             
-            // Validate format
             if (!shopUrl.includes('shop.tekmetric.com/shop/')) {
                 showToast('❌ Invalid shop URL format');
                 return;
@@ -1200,10 +1012,9 @@
                     throw new Error('Failed to add shop');
                 }
                 
-                showToast('✅ Shop added successfully');
+                showToast('✅ Shop added');
                 input.value = '';
                 
-                // Refresh modal
                 setTimeout(() => {
                     openShopsModal(currentLicenseEmail, currentLicenseCode);
                 }, 500);
@@ -1217,7 +1028,7 @@
         }
         
         async function removeShop(shopUrl) {
-            if (!confirm(`Remove ${shopUrl} from this license?`)) {
+            if (!confirm(`Remove ${shopUrl}?`)) {
                 return;
             }
             
@@ -1239,9 +1050,8 @@
                     throw new Error('Failed to remove shop');
                 }
                 
-                showToast('✅ Shop removed successfully');
+                showToast('✅ Shop removed');
                 
-                // Refresh modal
                 setTimeout(() => {
                     openShopsModal(currentLicenseEmail, currentLicenseCode);
                 }, 500);
@@ -1251,17 +1061,12 @@
             }
         }
         
-        // ========================================
-        // EDIT NOTES MODAL
-        // ========================================
-        
         function openNotesModal(email, activationCode) {
             currentLicenseEmail = email;
             currentLicenseCode = activationCode;
             
             document.getElementById('notes-modal-email').textContent = email;
             
-            // Find license data
             const license = allLicenses.find(l => l.activation_code === activationCode);
             document.getElementById('notes-textarea').value = license?.notes || '';
             
@@ -1297,9 +1102,9 @@
                     throw new Error('Failed to save notes');
                 }
                 
-                showToast('✅ Notes saved successfully');
+                showToast('✅ Notes saved');
                 closeNotesModal();
-                loadLicenses(); // Refresh data
+                loadLicenses();
                 
             } catch (error) {
                 showToast('❌ Error: ' + error.message);
